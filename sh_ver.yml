@@ -1,7 +1,6 @@
 ---
 - name: SHOW VERSION  
   hosts: all
-  connection: local
   gather_facts: no
 
   tasks:
