@@ -13,5 +13,4 @@
     - name: SHOW SOFTWARE VERSION
       debug:
         msg:
-          # - "{{ ios_version }}" 
           - "{{ ios_version.stdout_lines[0][0] }}"
