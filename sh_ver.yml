@@ -1,5 +1,5 @@
 - name: Validate Cisco IOS XE Version
-  hosts: cisco_devices
+  hosts: all
   gather_facts: no
   vars:
     expected_ios_version: "16.9.4"  # Replace with the version you expect
