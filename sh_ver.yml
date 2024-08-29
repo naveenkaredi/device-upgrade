@@ -9,6 +9,11 @@
     - name: Gather current IOS version
       cisco.ios.ios_facts:
       register: device_facts
+      vars:
+        ansible_network_os: ios
+      connection: network_cli
+      become: yes
+      become_method: enable
 
     - name: Debug device facts
       debug:
