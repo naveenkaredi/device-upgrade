@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: no
   vars:
-    expected_ios_version: "cat9k_iosxe.17.09.04a.SPA.bin"  # Expected version from your input
+    expected_ios_version: "cat9k_iosxe.17.09.03.SPA.bin"  # Expected version from your input
 
   tasks:
     - name: Gather current IOS version
