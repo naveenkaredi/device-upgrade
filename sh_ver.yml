@@ -15,16 +15,6 @@
       become: yes
       become_method: enable
 
-    - name: Check if IOS version matches the expected version
+    - name: Debug device facts
       debug:
-        msg: "Current IOS version: {{ device_facts.ansible_net_version }}"
-
-    - name: Validate IOS version
-      fail:
-        msg: "IOS version matches the expected version. No further actions required."
-      when: device_facts.ansible_net_version == expected_ios_version
-
-    - name: IOS version mismatch - proceed with further actions
-      debug:
-        msg: "IOS version does not match the expected version. Proceeding with further actions."
-      when: device_facts.ansible_net_version != expected_ios_version
+        var: device_facts
