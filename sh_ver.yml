@@ -1,19 +1,24 @@
-- name: SHOW VERSION TEST
-  hosts: all
+- name: Validate Cisco IOS XE Version
+  hosts: cisco_devices
   gather_facts: no
+  vars:
+    expected_ios_version: "16.9.4"  # Replace with the version you expect
 
   tasks:
-    - name: GET SOFTWARE VERSION
-      ios_command:
-        commands: show version
-        wait_for: result[0] contains IOS
-      register: ios_version
-      vars:
-        ansible_network_os: ios
-      connection: network_cli
-      become: yes
-      become_method: enable
+    - name: Gather current IOS version
+      cisco.ios.ios_facts:
+      register: device_facts
 
-    - name: SHOW SOFTWARE VERSION
+    - name: Check if IOS version matches the expected version
       debug:
-        msg: "{{ ios_version.stdout_lines[0][0] }}"
+        msg: "Current IOS version: {{ device_facts.ansible_net_version }}"
+
+    - name: Validate IOS version
+      fail:
+        msg: "IOS version matches the expected version. No further actions required."
+      when: device_facts.ansible_net_version == expected_ios_version
+
+    - name: IOS version mismatch - proceed with further actions
+      debug:
+        msg: "IOS version does not match the expected version. Proceeding with further actions."
+      when: device_facts.ansible_net_version != expected_ios_version
