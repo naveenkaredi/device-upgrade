@@ -25,7 +25,7 @@
 
     - name: Set current IOS version from ansible_net_image
       set_fact:
-        current_ios_version: "{{ device_facts.ansible_facts.ansible_net_image | regex_replace('(?<=:)(cat9k_iosxe.*\\.bin)', '\\1') }}"
+        current_ios_version: "{{ device_facts.ansible_facts.ansible_net_image | regex_replace('^.*?(cat9k_iosxe.*?\\.bin)', '\\1') }}"
 
     - name: Debug current IOS version
       debug:
@@ -40,4 +40,3 @@
       debug:
         msg: "IOS version does not match the expected version. Proceeding with further actions."
       when: current_ios_version != expected_ios_version
-
