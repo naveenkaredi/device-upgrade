@@ -1,5 +1,5 @@
 ---
-- name: Validate Cisco IOS XE Version
+- name: Validate Cisco IOS Version
   hosts: all
   gather_facts: no
   vars:
