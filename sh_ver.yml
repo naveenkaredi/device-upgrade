@@ -1,4 +1,4 @@
-- name: SHOW VERSION
+- name: SHOW VERSION TEST
   hosts: all
   gather_facts: no
 
@@ -11,7 +11,6 @@
       vars:
         ansible_network_os: ios
       connection: network_cli
-      auth_pass: "{{ ansible_ssh_pass }}"
       become: yes
       become_method: enable
 
