@@ -3,16 +3,25 @@
   hosts: all
 
   tasks:
-    - name: Verify Current Version
+    - name: GET SOFTWARE VERSION
       ios_command:
-        commands:
-          - "show version"
-      register: device_version
+        commands: show version
+        wait_for: result[0] contains IOS
+      register: ios_version
+      vars:
+        ansible_network_os: ios
+      connection: network_cli
+      become: yes
+      become_method: enable
       when: "{{ device_os }} is ios"
 
-    - name: Verify Current Version
+    - name: GET SOFTWARE VERSION
       nxos_command:
-        commands:
-          - "show version"
-      register: device_version
+        commands: show version
+      register: nxos_version
+      vars:
+        ansible_network_os: nxos
+      connection: network_cli
+      become: yes
+      become_method: enable
       when: "{{ device_os }} is nxos"
