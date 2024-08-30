@@ -1,0 +1,16 @@
+---
+- block:
+
+    - name: Verify Current Version
+      ios_command:
+        commands:
+          - "show version"
+      register: device_version
+      when: "{{ device_os }} is ios"
+
+    - name: Verify Current Version
+      nxos_command:
+        commands:
+          - "show version"
+      register: device_version
+      when: "{{ device_os }} is nxos"
