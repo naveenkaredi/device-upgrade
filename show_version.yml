@@ -1,6 +1,8 @@
 ---
-- block:
+- name: Verify Current Version
+  hosts: all
 
+  tasks:
     - name: Verify Current Version
       ios_command:
         commands:
