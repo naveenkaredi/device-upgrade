@@ -1,6 +1,8 @@
 ---
 - name: Verify Current Version
   hosts: all
+  vars:
+    ANSIBLE_DEBUG: True
 
   tasks:
     - name: GET SOFTWARE VERSION
