@@ -1,6 +1,7 @@
 ---
 - name: Verify Current Version
   hosts: all
+  gather_facts: no
 
   tasks:
     - name: GET SOFTWARE VERSION
