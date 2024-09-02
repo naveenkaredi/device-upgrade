@@ -1,6 +1,7 @@
 ---
 - name: Verify Current Version
   hosts: all
+  gather_facts: no
 
   tasks:
     - name: GET SOFTWARE VERSION
@@ -11,6 +12,8 @@
       vars:
         ansible_network_os: ios
       connection: network_cli
+      become: yes
+      become_method: enable
       when: "{{ device_os }} is ios"
 
     - name: GET SOFTWARE VERSION
@@ -20,4 +23,6 @@
       vars:
         ansible_network_os: nxos
       connection: network_cli
+      become: yes
+      become_method: enable
       when: "{{ device_os }} is nxos"
