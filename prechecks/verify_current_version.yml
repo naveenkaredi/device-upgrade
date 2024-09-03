@@ -14,6 +14,6 @@
       vars:
         ansible_network_os: ios
 
-    - name: CHECK VERSION
-      debug:
-        msg: "{{ output }}"
+    - name: Show installed boot image version
+      debug: msg="{{ ansible_net_image }}"
+      when: output is defined
