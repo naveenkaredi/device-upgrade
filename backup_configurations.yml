@@ -13,14 +13,14 @@
         state: directory
       run_once: true
 
-    - name: Check directoy stats
+    - name: Check directory stats
       stat:
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks"
       register: dir
 
     - debug: 
         var: dir
-      when: dir is not None
+      when: dir is defined
 
     - name: Remove existing file if it exists
       file:
@@ -37,4 +37,4 @@
 
     - debug: 
         var: file_path
-      when: file_path is not None
+      when: file_path is defined
