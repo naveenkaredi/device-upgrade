@@ -15,7 +15,7 @@
     
     - name: Show CPU Usage Output
       debug: 
-        var: output['stdout'][0] | split('\n')
+        var: output['stdout'][0] | regex_replace("\n", "|") | split("|")
       when: output is defined
 
     - name: Assert that IOS device can be upgraded
