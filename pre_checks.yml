@@ -12,11 +12,15 @@
         commands:
           - "show processes cpu"
       register: output
-    
+
+    - name: Set list output
+      set_fact:
+        output_list: output['stdout'][0] | regex_replace('\n', '|') | split('|')
+      
     - name: Show CPU Usage Output
       debug: 
-        var: output['stdout'][0] | regex_replace('\n', '|') | split('|')
-      when: output is defined
+        var: output_list
+      when: output_list is defined
 
     - name: Assert that IOS device can be upgraded
       assert:
@@ -32,5 +36,5 @@
           - 85 > item | split()[-1] | replace('%', '') | int
         success_msg: Device is in healthy state.
         fail_msg: Device should be manually verified.
-      loop: output['stdout'][0] | regex_replace('\n', '|') | split('|')
+      loop: output_list
       when: "'five minutes:' in item"
