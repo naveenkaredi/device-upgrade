@@ -9,18 +9,16 @@
   tasks:
     - name: Creates backup directory
       file:
-        path: "/var/lib/awx/projects/_11__device_upgrade/prechecks/{{ inventory_hostname }}"
+        path: "/var/lib/awx/projects/_11__device_upgrade/prechecks"
         state: directory
       run_once: true
-      check_mode: true
-      register: dir_name
       
     - name: Remove existing file if it exists
       file:
-        path: "/var/lib/awx/projects/_11__device_upgrade/precheck_{{ inventory_hostname }}.txt"
+        path: "/var/lib/awx/projects/_11__device_upgrade/prechecks/precheck_{{ inventory_hostname }}.txt"
         state: absent
 
     - name: Creates file
       file:
-        path: "/var/lib/awx/projects/_11__device_upgrade/precheck_{{ inventory_hostname }}.txt"
+        path: "/var/lib/awx/projects/_11__device_upgrade/prechecks/precheck_{{ inventory_hostname }}.txt"
         state: touch
