@@ -21,7 +21,7 @@
     - name: Assert That It is Running The Desired boot Image
       assert:
         that:
-          - "'{{ expected_os_version }}' not in '{{ ansible_net_image }}'"
+          - expected_os_version not in ansible_net_image
         success_msg: Device not running target image.
         fail_msg: Device is already running target image.
       ignore_errors: true
