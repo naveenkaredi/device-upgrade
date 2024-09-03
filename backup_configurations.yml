@@ -23,6 +23,11 @@
         path: "prechecks"
       register: dir
 
+    - name: List contents of runtime path
+      shell: "ls {{ playbook_path_output.stdout }}"
+      register: ls_output
+    - debug: var=ls_output
+
     - name: Remove existing file if it exists
       file:
         path: "prechecks/prechecks_{{ inventory_hostname }}.txt"
@@ -35,4 +40,3 @@
         state: touch
       when: dir.stat.exists and dir.stat.isdir
       register: file_path
-      
