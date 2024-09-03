@@ -1,5 +1,5 @@
 ---
-- name: Verify Current Version
+- name: Performing Pre-Checks
   hosts: all
   gather_facts: no
   connection: network_cli
@@ -11,12 +11,12 @@
       ios_command:
         commands:
           - "show processes cpu"
-    #   register: output
+      register: output
     
-    # - name: Show output
-    #   debug: 
-    #     msg: output
-    #   when: output is defined
+    - name: Show output
+      debug: 
+        var: output
+      when: output is defined
 
     # - name: Assert that IOS device can be upgraded
     #   assert:
