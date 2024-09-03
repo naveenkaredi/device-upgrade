@@ -14,7 +14,8 @@
       register: output
     
     - name: Show output
-      debug: msg=output
+      debug: 
+        msg: output
       when: output is defined
 
     - name: Assert that IOS device can be upgraded
@@ -28,8 +29,8 @@
     
     - assert:
         that:
-          - 85 > "item.split()[-1] | replace('%', '')" | int
+          - 85 > item.split()[-1] | replace('%', '') | int
         success_msg: Device is in healthy state.
         fail_msg: Device should be manually verified.
-      loop: "output['stdout'][0].split('\n')"
+      loop: output['stdout'][0].split('\n')
       when: "'five minutes:' in item"
