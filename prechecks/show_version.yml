@@ -4,6 +4,11 @@
   gather_facts: no
 
   tasks:
+
+    - name: Check device_list
+      debug:
+        msg: "{{ device_list }}"
+
     - name: GET SOFTWARE VERSION
       ios_command:
         commands: show version
@@ -14,15 +19,7 @@
       connection: network_cli
       become: yes
       become_method: enable
-      when: "{{ device_os }} is ios"
 
-    - name: GET SOFTWARE VERSION
-      nxos_command:
-        commands: show version
-      register: nxos_version
-      vars:
-        ansible_network_os: nxos
-      connection: network_cli
-      become: yes
-      become_method: enable
-      when: "{{ device_os }} is nxos"
+    - name: Check version
+      debug:
+        msg: "{{ ios_version }}"
