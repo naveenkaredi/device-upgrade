@@ -16,7 +16,6 @@
     - name: Check directoy stats
       stat:
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks"
-        state: directory
       register: dir
 
     - debug: 
