@@ -1,0 +1,16 @@
+---
+- name: Verify Current Version
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Gather facts to check IOS version
+      ios_facts:
+        gather_subset:
+          - min
+          - hardware
+      register: output
+
+    - name: CHECK VERSION
+      debug:
+        msg: "{{ output }}"
