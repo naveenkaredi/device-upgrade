@@ -22,3 +22,7 @@
       file:
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks/precheck_{{ inventory_hostname }}.txt"
         state: touch
+      register: file_path
+
+    - debug: 
+        var: file_path
