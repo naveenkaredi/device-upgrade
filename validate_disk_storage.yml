@@ -1,0 +1,18 @@
+---
+- name: Verify Current Version
+  hosts: all
+  gather_facts: no
+  connection: network_cli
+  vars:
+    ansible_network_os: ios
+
+  tasks:
+    - name: Find out playbooks runtime path
+      shell: pwd
+      register: playbook_path_output
+    - debug: var=playbook_path_output.stdout
+
+    - name: Find out playbooks path
+      shell: "ls {{ playbook_path_output.stdout }}"
+      register: ls_output
+    - debug: var=ls_output

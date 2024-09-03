@@ -34,3 +34,5 @@
         path: "prechecks/prechecks_{{ inventory_hostname }}.txt"
         state: touch
       when: dir.stat.exists and dir.stat.isdir
+      register: file_path
+      
