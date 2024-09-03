@@ -12,8 +12,17 @@
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks"
         state: directory
       run_once: true
+
+    - name: Check directoy stats
+      stat:
+        path: "/var/lib/awx/projects/_11__device_upgrade/prechecks"
+        state: directory
       register: dir
-      
+
+    - debug: 
+        var: dir
+      when: dir is not None
+
     - name: Remove existing file if it exists
       file:
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks/precheck_{{ inventory_hostname }}.txt"
