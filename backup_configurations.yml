@@ -7,6 +7,11 @@
     ansible_network_os: ios
     
   tasks:
+    - name: Find out playbooks path
+      shell: pwd
+      register: playbook_path_output
+    - debug: var=playbook_path_output.stdout
+
     - name: Creates backup directory
       file:
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks/{{ inventory_hostname }}"
