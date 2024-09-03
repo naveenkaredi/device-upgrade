@@ -15,4 +15,12 @@
       check_mode: true
       register: dir_name
       
-    - debug: var=dir_name
+    - name: Remove existing file if it exists
+      file:
+        path: "precheck_{{ inventory_hostname }}.txt"
+        state: absent
+
+    - name: Creates file
+      file:
+        path: "precheck_{{ inventory_hostname }}.txt"
+        state: touch
