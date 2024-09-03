@@ -10,6 +10,7 @@
           - min
           - hardware
       register: output
+      connection: network_cli
 
     - name: CHECK VERSION
       debug:
