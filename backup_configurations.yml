@@ -19,7 +19,7 @@
       run_once: true
 
     - name: Find out playbooks path
-      shell: "ls /runner/project"
+      shell: "ls {{ playbook_path_output.stdout }}"
       register: ls_output
     - debug: var=ls_output
 
