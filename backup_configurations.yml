@@ -7,7 +7,7 @@
     ansible_network_os: ios
     
   tasks:
-    - name: Find out playbooks path
+    - name: Find out playbooks runtime path
       shell: pwd
       register: playbook_path_output
     - debug: var=playbook_path_output.stdout
@@ -18,19 +18,10 @@
         state: directory
       run_once: true
 
-    - name: Find out playbooks path
-      shell: "ls {{ playbook_path_output.stdout }}"
-      register: ls_output
-    - debug: var=ls_output
-
     - name: Check directory stats
       stat:
         path: "prechecks"
       register: dir
-
-    - debug: 
-        var: dir
-      when: dir is defined
 
     - name: Remove existing file if it exists
       file:
@@ -43,8 +34,3 @@
         path: "prechecks/prechecks_{{ inventory_hostname }}.txt"
         state: touch
       when: dir.stat.exists and dir.stat.isdir
-      register: file_path
-
-    - debug: 
-        var: file_path
-      when: file_path is defined
