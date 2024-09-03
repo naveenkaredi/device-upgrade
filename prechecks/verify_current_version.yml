@@ -11,6 +11,8 @@
           - hardware
       register: output
       connection: network_cli
+      vars:
+        ansible_network_os: ios
 
     - name: CHECK VERSION
       debug:
