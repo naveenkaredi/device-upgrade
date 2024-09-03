@@ -7,6 +7,11 @@
     ansible_network_os: ios
 
   tasks:
+    - name: Gather only the config and default facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - config
+
     - name: Gather CPU usage and free memory
       ios_command:
         commands:
