@@ -18,3 +18,6 @@
         state: directory
       run_once: true
       check_mode: true
+      register: dir_name
+      
+    - debug: var=dir_name
