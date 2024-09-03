@@ -12,17 +12,21 @@
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks"
         state: directory
       run_once: true
+      register: dir
       
     - name: Remove existing file if it exists
       file:
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks/precheck_{{ inventory_hostname }}.txt"
         state: absent
+      when: dir.stat.exists and dir.stat.isdir
 
     - name: Creates file
       file:
         path: "/var/lib/awx/projects/_11__device_upgrade/prechecks/precheck_{{ inventory_hostname }}.txt"
         state: touch
+      when: dir.stat.exists and dir.stat.isdir
       register: file_path
 
     - debug: 
         var: file_path
+      when: file_path is not None
