@@ -2,7 +2,10 @@
 - name: Verify Current Version
   hosts: all
   gather_facts: no
-
+  connection: network_cli
+  vars:
+    ansible_network_os: ios
+    
   tasks:
     - name: Gather facts to check IOS version
       ios_facts:
@@ -10,9 +13,6 @@
           - min
           - hardware
       register: output
-      connection: network_cli
-      vars:
-        ansible_network_os: ios
 
     - name: Show installed boot image version
       debug: msg="{{ ansible_net_image }}"
