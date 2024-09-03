@@ -16,8 +16,8 @@
     - name: Assert that IOS device can be upgraded
       assert:
         that:
-          - '"ios" == "{{ ansible_net_system }}"'
-          - 1000 < "{{ ansible_net_memfree_mb | default('1001') }}" | int
+          - ios == ansible_net_system
+          - 1000 < ansible_net_memfree_mb | default('1001') | int
         success_msg: Device is in healthy state.
         fail_msg: Device should be manually verified.
       when: ansible_net_memfree_mb is defined
