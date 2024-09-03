@@ -36,5 +36,5 @@
           - 85 > item | split()[-1] | replace('%', '') | int
         success_msg: Device is in healthy state.
         fail_msg: Device should be manually verified.
-      loop: output_list
+      loop: "{{ output_list }}"
       when: "'five minutes:' in item"
