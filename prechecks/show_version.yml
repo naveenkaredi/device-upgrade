@@ -4,11 +4,6 @@
   gather_facts: no
 
   tasks:
-
-    - name: Check device_list
-      debug:
-        msg: "{{ device_list }}"
-
     - name: GET SOFTWARE VERSION
       ios_command:
         commands: show version
