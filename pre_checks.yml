@@ -18,7 +18,7 @@
           - "show processes cpu"
       register: output
 
-    - name: Assert that IOS device can be upgraded
+    - name: Assert that IOS device has free memory
       assert:
         that:
           - "'ios' == ansible_net_system"
@@ -27,7 +27,8 @@
         fail_msg: Device should be manually verified.
       when: ansible_net_memfree_mb is defined
     
-    - assert:
+    - name: Assert that IOS device has optimal CPU percentage
+      assert:
         that:
           - 85 > "item.split()[-1] | replace('%', '')" | int
         success_msg: Device is in healthy state.
