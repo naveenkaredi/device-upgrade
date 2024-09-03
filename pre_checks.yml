@@ -33,4 +33,4 @@
         success_msg: Device is in healthy state.
         fail_msg: Device should be manually verified.
       loop: query(output['stdout'][0], regex_replace("\n", "|"), split("|"))
-      when: 'five minutes:' in item
+      when: "'five minutes:' in item"
