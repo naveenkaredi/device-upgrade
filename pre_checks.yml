@@ -15,7 +15,7 @@
 
     - name: Set list output
       set_fact:
-        output_list: output['stdout'][0] | regex_replace('\n', '|') | split('|')
+        output_list: "{{ output['stdout'][0] | regex_replace('\n', '|') | split('|') }}"
       
     - name: Show CPU Usage Output
       debug: 
