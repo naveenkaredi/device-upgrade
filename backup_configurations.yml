@@ -1,0 +1,15 @@
+---
+- name: Backup Configurations
+  hosts: all
+  gather_facts: no
+  connection: network_cli
+  vars:
+    ansible_network_os: ios
+    
+  tasks:
+    - name: Creates backup directory
+      file:
+        path: "prechecks/{{ inventory_hostname }}"
+        state: directory
+      when: output is defined
+      run_once: true
