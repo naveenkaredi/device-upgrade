@@ -9,4 +9,4 @@
   register: ls_output
 - debug: var=ls_output
 
-- debug: var=file
+- debug: var=prechecks_{{ inventory_hostname }}
