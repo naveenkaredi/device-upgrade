@@ -3,35 +3,8 @@
   hosts: all
   gather_facts: no
   connection: network_cli
-  vars:
-    ansible_network_os: ios
-
+  strategy: free
   tasks:
-    - name: Gather only hardware facts
-      cisco.ios.ios_facts:
-        gather_subset:
-          - hardware
-
-    - name: Gather CPU usage and free memory
-      ios_command:
-        commands:
-          - "show processes cpu"
-      register: output
-
-    - name: Assert that IOS device has free memory
-      assert:
-        that:
-          - "'ios' == ansible_net_system"
-          - 1000 < ansible_net_memfree_mb | default('1001') | int
-        success_msg: Device is in healthy state.
-        fail_msg: Device should be manually verified.
-      when: ansible_net_memfree_mb is defined
+    - import_role:
+        name: pre_checks
     
-    - name: Assert that IOS device has optimal CPU percentage
-      assert:
-        that:
-          - 85 > "item.split()[-1] | replace('%', '')" | int
-        success_msg: Device is in healthy state.
-        fail_msg: Device should be manually verified.
-      loop: "{{ output['stdout'][0] | regex_replace('\n', '|') | split('|') }}"
-      when: "'five minutes:' in item"
