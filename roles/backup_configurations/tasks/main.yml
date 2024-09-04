@@ -48,4 +48,4 @@
 - name: Assign file contents to a variable
   ansible.builtin.set_stats:
     data:
-      prechecks_{{ inventory_hostname }}: "file_content.msg | join('') }}"
+      prechecks_{{ inventory_hostname }} | replace('-', '_'): "file_content.msg | join('') }}"
