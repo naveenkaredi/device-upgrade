@@ -19,8 +19,8 @@
     msg: "{{ temp.msg | replace('-', '_') }}"
   register: file
 
-- debug: msg="{{ file.msg }}"
+- debug: var="{{ file.msg }}"
   register: file_name
   
-- debug: msg="{{ file_name.msg }}"
+- debug: var="{{ file_name.msg }}"
   register: file_content
