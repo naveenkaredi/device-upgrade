@@ -59,3 +59,7 @@
     content: "{{ file_content | join('') }}"
     dest: "prechecks/{{file_name}}"
   
+- name: View file contents
+  shell: "cat prechecks/{{file_name}}"
+  register: cat_output
+- debug: var=cat_output
