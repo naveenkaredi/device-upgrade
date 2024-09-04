@@ -56,7 +56,7 @@
 
 - name: Write precheck contents to the file
   copy:
-    content: "{{ file_content }}"
+    content: "{{ file_content.msg }}"
     dest: "prechecks/{{file_name}}"
   
 - name: View file contents
