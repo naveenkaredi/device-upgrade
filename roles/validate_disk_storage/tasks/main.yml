@@ -24,7 +24,8 @@
     file_name="{{ file.msg }}"
 
 - debug: 
-    var: "file_name"
-
-- debug: 
     msg: "{{ lookup('vars', file_name) }}"
+  register: file_content
+  
+- debug:
+    var: "file_content"
