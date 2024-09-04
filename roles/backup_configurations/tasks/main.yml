@@ -42,7 +42,8 @@
     check_type: pre
   loop: "{{ check_commands.ios }}"
 
-- debug: msg="the value of prechecks_{{ inventory_hostname }}.txt is {{lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
+- name: "File content of prechecks_{{ inventory_hostname }}.txt"
+  debug: msg="{{ lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
   register: file_content
 
 - name: Assign file contents to a variable
