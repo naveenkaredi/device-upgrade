@@ -48,7 +48,7 @@
 
 - name: Prepare file variable
   debug:
-    msg: "{{ prechecks_{{ inventory_hostname }} | replace('-', '_') }}"
+    var: "prechecks_{{ inventory_hostname }} | replace('-', '_')"
   register: file
 
 - name: Assign file contents to a variable
