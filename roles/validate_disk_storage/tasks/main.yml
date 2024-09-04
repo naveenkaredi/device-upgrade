@@ -20,5 +20,5 @@
   register: file
 
 - debug: var=file
-- debug: var=file.msg
+- debug: msg="{{ file.msg }}"
 
