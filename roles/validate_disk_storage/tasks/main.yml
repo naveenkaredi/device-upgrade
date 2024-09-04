@@ -19,5 +19,9 @@
     msg: "{{ temp.msg | replace('-', '_') }}"
   register: file
 
+- name: Setting fact for device variable
+  set_fact:  
+    file_name="{{ file.msg }}"
+
 - debug: 
-    msg: "{{ '{{ file.msg }}' }}"
+    msg: "{{ file_name }}"
