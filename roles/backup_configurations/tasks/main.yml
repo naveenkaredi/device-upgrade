@@ -35,7 +35,7 @@
 
 - name: IOS run commands and capture
   include_role:
-    name: command_capture
+    name: utils/command_capture
   vars:
     command: "{{ item.cmd }}"
     device_type: ios
