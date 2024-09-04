@@ -36,3 +36,8 @@
 - name: IOS run commands and capture
   include_role:
     name: command_capture
+  vars:
+    command: "{{ item.cmd }}"
+    device_type: ios
+    check_type: pre
+  loop: "{{ check_commands.ios }}"

@@ -1,4 +1,27 @@
 ---
-- name: TEST
-  debug:
-    msg: "testing"
+- name: IOS gather {{ command }} output
+  ios_command:
+    commands:
+      - "{{ command }}"
+  register: ios_output
+  failed_when: false
+  when: device_type == "ios"
+
+- name: Command Success
+  debug: msg="{{ ios_output }}"
+  when: ios_output is defined and ios_output.stdout is defined
+
+- block:
+  - name: Preparing text for file
+    set_fact: text="{{ ios_output }}"
+    when: ios_output is defined and ios_output.stdout is defined
+
+  - name: Add {{ command }} to precheck text file
+    ansible.builtin.blockinfile:
+      path: "{{ check_type }}checks/{{ check_type }}checks_{{ inventory_hostname }}.txt"
+      marker: "################## {mark} OF {{ command }} OUTPUT ##################\n\n\n"
+      marker_begin: START
+      marker_end: END
+      block: "{{ text.stdout[0] }}"
+  
+  when: (ios_output is defined and ios_output.stdout is defined)
