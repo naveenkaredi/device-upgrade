@@ -24,4 +24,4 @@
     file_name="{{ file.msg }}"
 
 - debug: 
-    msg: "{{ file_name }}"
+    var: "file_name"
