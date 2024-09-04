@@ -1,13 +1,13 @@
 ---
-- name: Find out playbooks runtime path
-  shell: pwd
-  register: playbook_path_output
-- debug: var=playbook_path_output.stdout
+# - name: Find out playbooks runtime path
+#   shell: pwd
+#   register: playbook_path_output
+# - debug: var=playbook_path_output.stdout
 
-- name: List contents of runtime path
-  shell: "ls {{ playbook_path_output.stdout }}"
-  register: ls_output
-- debug: var=ls_output
+# - name: List contents of runtime path
+#   shell: "ls {{ playbook_path_output.stdout }}"
+#   register: ls_output
+# - debug: var=ls_output
 
 - name: Preparing Prechecks file variable...
   debug:
