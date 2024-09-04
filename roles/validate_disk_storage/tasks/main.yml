@@ -9,4 +9,14 @@
   register: ls_output
 - debug: var=ls_output
 
-- debug: var=prechecks_{{ inventory_hostname }}
+- name: Preparing Prechecks file variable...
+  debug:
+    msg: "prechecks_{{ inventory_hostname }}"
+  register: temp
+
+- name: Preparing Prechecks file variable....
+  debug:
+    msg: "{{ temp.msg | replace('-', '_') }}"
+  register: file
+
+- debug: var=file
