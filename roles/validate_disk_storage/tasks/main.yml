@@ -30,7 +30,31 @@
 - debug:
     var: "file_content"
 
-- name: Write precheck contents to a file
+- name: Creates backup directory
+  file:
+    path: "prechecks"
+    state: directory
+  run_once: true
+
+- name: Check directory stats
+  stat:
+    path: "prechecks"
+  register: dir
+
+- name: Remove existing file if it exists
+  file:
+    path: "prechecks/{{file_name}}.txt"
+    state: absent
+  when: dir.stat.exists and dir.stat.isdir
+
+- name: Creates file
+  file:
+    path: "prechecks/{{file_name}}.txt"
+    state: touch
+  when: dir.stat.exists and dir.stat.isdir
+  register: file_path
+
+- name: Write precheck contents to the file
   copy:
     content: "{{ file_content | join('') }}"
     dest: "prechecks/{{file_name}}"
