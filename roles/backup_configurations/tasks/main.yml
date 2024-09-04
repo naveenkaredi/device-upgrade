@@ -48,4 +48,4 @@
 - name: Assign file content to a variable
   ansible.builtin.set_stats:
     data:
-      file: "{{ file_content.msg | join('\n') }}"
+      file: "{{ file_content.msg | join('') }}"
