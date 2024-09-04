@@ -9,50 +9,52 @@
 #   register: ls_output
 # - debug: var=ls_output
 
-- name: Preparing Prechecks file variable...
-  debug:
-    msg: "prechecks_{{ inventory_hostname }}"
-  register: temp
+- block: 
+  - name: Preparing Prechecks file variable...
+    debug:
+      msg: "prechecks_{{ inventory_hostname }}"
+    register: temp
 
-- name: Preparing Prechecks file variable....
-  debug:
-    msg: "{{ temp.msg | replace('-', '_') }}"
-  register: file
+  - name: Preparing Prechecks file variable....
+    debug:
+      msg: "{{ temp.msg | replace('-', '_') }}"
+    register: file
 
-- name: Setting fact for device variable
-  set_fact:  
-    file_name="{{ file.msg }}"
+  - name: Setting fact for device variable
+    set_fact:  
+      file_name="{{ file.msg }}"
 
-- debug: 
-    msg: "{{ lookup('vars', file_name) }}"
-  register: file_content
-  
-- debug:
-    var: "file_content"
+  - debug: 
+      msg: "{{ lookup('vars', file_name) }}"
+    register: file_content
+    
+  - debug:
+      var: "file_content"
 
-- name: Creates backup directory
-  file:
-    path: "prechecks"
-    state: directory
-  run_once: true
+- block: 
+  - name: Creates backup directory
+    file:
+      path: "prechecks"
+      state: directory
+    run_once: true
 
-- name: Check directory stats
-  stat:
-    path: "prechecks"
-  register: dir
+  - name: Check directory stats
+    stat:
+      path: "prechecks"
+    register: dir
 
-- name: Remove existing file if it exists
-  file:
-    path: "prechecks/{{file_name}}.txt"
-    state: absent
-  when: dir.stat.exists and dir.stat.isdir
+  - name: Remove existing file if it exists
+    file:
+      path: "prechecks/{{file_name}}.txt"
+      state: absent
+    when: dir.stat.exists and dir.stat.isdir
 
-- name: Creates file
-  file:
-    path: "prechecks/{{file_name}}.txt"
-    state: touch
-  when: dir.stat.exists and dir.stat.isdir
-  register: file_path
+  - name: Creates file
+    file:
+      path: "prechecks/{{file_name}}.txt"
+      state: touch
+    when: dir.stat.exists and dir.stat.isdir
+    register: file_path
 
 - name: Write precheck contents to the file
   copy:

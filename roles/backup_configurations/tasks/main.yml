@@ -4,7 +4,6 @@
   register: playbook_path_output
 - debug: var=playbook_path_output.stdout
 
-
 - block: 
   - name: Creates backup directory
     file:
@@ -44,21 +43,22 @@
     check_type: pre
   loop: "{{ check_commands.ios }}"
 
-- name: "File contents of prechecks_{{ inventory_hostname }}.txt"
-  debug: msg="{{ lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
-  register: file_content
+- block:
+  - name: "File contents of prechecks_{{ inventory_hostname }}.txt"
+    debug: msg="{{ lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
+    register: file_content
 
-- name: Preparing file variable...
-  debug:
-    msg: "prechecks_{{ inventory_hostname }}"
-  register: temp
+  - name: Preparing file variable...
+    debug:
+      msg: "prechecks_{{ inventory_hostname }}"
+    register: temp
 
-- name: Preparing file variable....
-  debug:
-    msg: "{{ temp.msg | replace('-', '_') }}"
-  register: file
+  - name: Preparing file variable....
+    debug:
+      msg: "{{ temp.msg | replace('-', '_') }}"
+    register: file
 
-- name: Assign file contents to a variable
-  ansible.builtin.set_stats:
-    data:
-      "{{ file.msg }}": "{{ file_content.msg | join('') }}"
+  - name: Assign file contents to a variable
+    ansible.builtin.set_stats:
+      data:
+        "{{ file.msg }}": "{{ file_content.msg | join('') }}"
