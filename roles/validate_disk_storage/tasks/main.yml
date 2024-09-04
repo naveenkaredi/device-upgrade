@@ -20,4 +20,4 @@
   register: file
 
 - debug: 
-    msg: "{{ file }}"
+    var: "{{ file.msg }}"
