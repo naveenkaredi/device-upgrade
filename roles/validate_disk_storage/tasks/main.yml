@@ -29,3 +29,9 @@
   
 - debug:
     var: "file_content"
+
+- name: Write precheck contents to a file
+  copy:
+    content: "{{ file_content | join('') }}"
+    dest: "prechecks/{{file_name}}"
+  
