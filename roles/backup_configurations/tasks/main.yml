@@ -46,7 +46,7 @@
   debug: msg="{{ lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
   register: file_content
 
-- name: Prepare file variable:
+- name: Prepare file variable
   debug:
     msg: "{{ prechecks_{{ inventory_hostname }} | replace('-', '_') }}"
   register: file
