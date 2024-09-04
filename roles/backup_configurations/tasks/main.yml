@@ -46,16 +46,17 @@
 #   debug: msg="{{ lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
 #   register: file_content
 
-- name: Prepare file variable
+- name: Preparing file variable...
   debug:
     msg: "prechecks_{{ inventory_hostname }}"
   register: temp
 - debug: var=temp
 
-# - name: Prepare file variable
-#   debug:
-#     var: "prechecks_{{ inventory_hostname }} | replace('-', '_')"
-#   register: file
+- name: Preparing file variable....
+  debug:
+    msg: "temp.msg | replace('-', '_')"
+  register: file
+- debug: var=file
 
 # - name: Assign file contents to a variable
 #   ansible.builtin.set_stats:
