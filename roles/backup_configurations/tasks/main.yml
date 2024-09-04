@@ -43,9 +43,9 @@
   loop: "{{ check_commands.ios }}"
 
 - debug: msg="the value of prechecks_{{ inventory_hostname }}.txt is {{lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
-  register: prechecks_{{ inventory_hostname }}
+  register: file_content
 
 - name: Assign file contents to a variable
   ansible.builtin.set_stats:
     data:
-      file: "{{ prechecks_{{ inventory_hostname }}.msg | join('') }}"
+      prechecks_{{ inventory_hostname }}: "file_content.msg | join('') }}"
