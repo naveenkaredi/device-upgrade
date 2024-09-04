@@ -42,7 +42,4 @@
     check_type: pre
   loop: "{{ check_commands.ios }}"
 
-- name: View contents of the precheck file
-  shell: "cat prechecks/prechecks_{{ inventory_hostname }}.txt"
-  register: file_content
-- debug: var=file_content
+- debug: msg="the value of prechecks_{{ inventory_hostname }}.txt is {{lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
