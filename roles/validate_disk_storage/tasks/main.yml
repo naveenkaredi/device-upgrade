@@ -8,3 +8,5 @@
   shell: "ls {{ playbook_path_output.stdout }}"
   register: ls_output
 - debug: var=ls_output
+
+- debug: var=file
