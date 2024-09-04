@@ -54,7 +54,7 @@
 
 - name: Preparing file variable....
   debug:
-    msg: "temp.msg | replace('-', '_')"
+    msg: "{{ temp.msg | replace('-', '_') }}"
   register: file
 - debug: var=file
 
