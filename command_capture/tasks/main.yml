@@ -1,10 +1,4 @@
 ---
-- name: Capturing Commands
-  connection: network_cli
-  vars:
-    ansible_network_os: ios
-    
-  tasks:
-    - name: TEST
-      debug:
-        msg: "testing"
+- name: TEST
+  debug:
+    msg: "testing"
