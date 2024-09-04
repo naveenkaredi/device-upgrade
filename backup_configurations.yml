@@ -40,3 +40,7 @@
         state: touch
       when: dir.stat.exists and dir.stat.isdir
       register: file_path
+
+    - name: IOS run commands and capture
+      include_role:
+        name: command_capture
