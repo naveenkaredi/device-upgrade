@@ -48,10 +48,16 @@
 
 - name: Prepare file variable
   debug:
-    var: "prechecks_{{ inventory_hostname }} | replace('-', '_')"
-  register: file
+    var: "prechecks_{{ inventory_hostname }}"
+  register: temp
+- debug: var=temp
 
-- name: Assign file contents to a variable
-  ansible.builtin.set_stats:
-    data:
-      "{{ file.msg }}": "file_content.msg | join('')"
+# - name: Prepare file variable
+#   debug:
+#     var: "prechecks_{{ inventory_hostname }} | replace('-', '_')"
+#   register: file
+
+# - name: Assign file contents to a variable
+#   ansible.builtin.set_stats:
+#     data:
+#       "{{ file.msg }}": "file_content.msg | join('')"
