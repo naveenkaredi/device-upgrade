@@ -1,0 +1,12 @@
+---
+primary_flash_names:
+  ios:
+    - bootflash
+    - flash
+    - flash-1
+
+secondary_flash_names:
+  ios: 
+    - stby-bootflash
+    - slavebootflash
+    - flash-2

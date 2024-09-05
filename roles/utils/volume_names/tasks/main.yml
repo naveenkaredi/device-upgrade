@@ -6,17 +6,22 @@
   register: dir_output
 
 - block:
-    - name: Determine if primary volume name is bootflash
-      set_fact: device_primary_flash="bootflash"
-      when: dir_output['stdout'][0][:40].find(' bootflash:') != -1
+    # - name: Determine if primary volume name is bootflash
+    #   set_fact: device_primary_flash="bootflash"
+    #   when: dir_output['stdout'][0][:40].find(' bootflash:') != -1
 
-    - name: Determine if primary volume name is flash
-      set_fact: device_primary_flash="flash"
-      when: dir_output['stdout'][0][:40].find(' flash:') != -1
+    # - name: Determine if primary volume name is flash
+    #   set_fact: device_primary_flash="flash"
+    #   when: dir_output['stdout'][0][:40].find(' flash:') != -1
 
-    - name: Determine if primary volume name is flash-1
-      set_fact: device_primary_flash="flash-1"
-      when: dir_output['stdout'][0][:40].find(' flash-1:') != -1
+    # - name: Determine if primary volume name is flash-1
+    #   set_fact: device_primary_flash="flash-1"
+    #   when: dir_output['stdout'][0][:40].find(' flash-1:') != -1
+
+    - name: Determine if primary volume name is {{ item }}
+      set_fact: device_primary_flash="{{item}}"
+      when: dir_output['stdout'][0][:40].find(' {{item}}:') != -1
+      loop: "{{ primary_flash_names.ios }}"
   
 - name: debug primary flash name
   debug: var="device_primary_flash"
