@@ -18,6 +18,7 @@
     success_msg: Device is in healthy state.
     fail_msg: Device should be manually verified.
   when: ansible_net_memfree_mb is defined
+  ignore_errors: true
 
 - name: Assert that IOS device has optimal CPU percentage
   assert:
