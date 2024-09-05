@@ -1,0 +1,10 @@
+---
+- name: Prestaging
+  hosts: all
+  gather_facts: no
+  connection: network_cli
+  strategy: free
+  tasks:
+    - import_role:
+        name: prestaging
+    
