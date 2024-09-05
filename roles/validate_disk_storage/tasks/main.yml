@@ -2,8 +2,11 @@
 - name: Fetch volume names
   include_role:
     name: utils/volume_names
- 
- post_tasks:
+  post_tasks:
   - debug: var=device_primary_flash"
   - debug: var=device_secondary_flash"
       
+
+- debug: var=device_primary_flash"
+
+- debug: var=device_secondary_flash"
