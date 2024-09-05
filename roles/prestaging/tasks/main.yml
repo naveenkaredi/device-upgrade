@@ -2,3 +2,11 @@
 - name: Save running config before starting
   ios_config:
     save_when: always
+
+- name: debug primary flash name
+  debug: var="device_primary_flash"
+  when: device_primary_flash is defined
+
+- name: debug secondary flash
+  debug: var="device_secondary_flash"
+  when: device_secondary_flash is defined
