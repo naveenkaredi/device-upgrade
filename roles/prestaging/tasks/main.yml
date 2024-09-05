@@ -3,9 +3,39 @@
   ios_config:
     save_when: always
 
+- block: 
+  - name: Preparing primary flash variable...
+    debug:
+      msg: "device_primary_flash_{{ inventory_hostname }}"
+    register: temp
+
+  - name: Preparing primary flash variable...
+    debug:
+      msg: "{{ temp.msg | replace('-', '_') }}"
+    register: device_primary_flash_variable
+
+  - name: Setting fact for primary flash
+    set_fact:  
+      device_primary_flash="{{ device_primary_flash_variable.msg }}"
+
 - name: debug primary flash name
   debug: var="device_primary_flash"
   when: device_primary_flash is defined
+
+- block: 
+  - name: Preparing secondary flash variable...
+    debug:
+      msg: "device_secondary_flash_{{ inventory_hostname }}"
+    register: temp
+
+  - name: Preparing secondary flash variable...
+    debug:
+      msg: "{{ temp.msg | replace('-', '_') }}"
+    register: device_secondary_flash_variable
+
+  - name: Setting fact for secondary flash
+    set_fact:  
+      device_secondary_flash="{{ device_secondary_flash_variable.msg }}"
 
 - name: debug secondary flash
   debug: var="device_secondary_flash"
