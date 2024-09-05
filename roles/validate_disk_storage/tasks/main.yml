@@ -4,6 +4,11 @@
     name: utils/volume_names
 
 - block: 
+  - name: Gather only hardware facts
+    cisco.ios.ios_facts:
+      gather_subset:
+        - hardware
+
   - name: Check free memory in secondary flash
     ios_command:
       commands:
