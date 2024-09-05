@@ -35,7 +35,8 @@
 
   - name: Setting fact for secondary flash
     set_fact:  
-      device_secondary_flash="{{ lookup('vars', device_secondary_flash_variable.msg) }}"
+      device_secondary_flash="{{ lookup('vars', device_secondary_flash_variable.msg, default=null) }}"
+    when: 
 
 - name: debug secondary flash
   debug: var="device_secondary_flash"
