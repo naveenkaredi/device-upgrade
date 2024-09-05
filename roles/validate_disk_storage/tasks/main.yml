@@ -17,7 +17,7 @@
   - name: Assign primary flash name to artifacts
     ansible.builtin.set_stats:
       data:
-        "{{device_primary_flash_variable}}": "{{device_primary_flash}}"
+        "{{device_primary_flash_variable.msg}}": "{{device_primary_flash}}"
 
 - block: 
   - name: Assign secondary flash name to artifacts
