@@ -9,7 +9,7 @@
       msg: "device_primary_flash_{{ inventory_hostname }}"
     register: temp
 
-  - name: Preparing file variable....
+  - name: Preparing primary flash variable...
     debug:
       msg: "{{ temp.msg | replace('-', '_') }}"
     register: device_primary_flash_variable
@@ -20,10 +20,21 @@
         "{{device_primary_flash_variable.msg}}": "{{device_primary_flash}}"
 
 - block: 
-  - name: Assign secondary flash name to artifacts
-    ansible.builtin.set_stats:
-      data:
-        device_secondary_flash: "{{device_secondary_flash}}"
+  - block: 
+    - name: Preparing secondary flash variable...
+      debug:
+        msg: "device_secondary_flash_{{ inventory_hostname }}"
+      register: temp
+
+    - name: Preparing secondary flash variable...
+      debug:
+        msg: "{{ temp.msg | replace('-', '_') }}"
+      register: device_secondary_flash_variable
+
+    - name: Assign secondary flash name to artifacts
+      ansible.builtin.set_stats:
+        data:
+          "{{device_secondary_flash_variable.msg}}": "{{device_secondary_flash}}"
 
   - name: Gather only hardware facts
     cisco.ios.ios_facts:
