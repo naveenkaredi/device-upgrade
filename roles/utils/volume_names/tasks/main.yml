@@ -6,7 +6,7 @@
         - "dir"
     register: dir_output
 
-  - name: "Determine if primary volume name is {{ item }}"
+  - name: "Determine primary volume name"
     set_fact: device_primary_flash="{{item}}"
     when: dir_output['stdout'][0][:40].find(' {{item}}:') != -1
     loop: "{{ primary_flash_names.ios }}"
@@ -22,7 +22,7 @@
         - "show file systems"
     register: file_systems_output
 
-  - name: "Determine if secondary volume name is {{ item }}"
+  - name: "Determine secondary volume name"
     set_fact: device_secondary_flash="{{item}}"
     when: file_systems_output['stdout'][0].find(' {{item}}:') != -1
     loop: "{{ secondary_flash_names.ios }}"
