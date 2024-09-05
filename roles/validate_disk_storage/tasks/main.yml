@@ -28,7 +28,7 @@
     assert:
       that:
         - "'ios' == ansible_net_system"
-        - 1000 < {{ secondary_flash_memfree_mb }}
+        - 1000 < secondary_flash_memfree_mb | default('1001') | int
       success_msg: Device is in healthy state.
       fail_msg: Device should be manually verified.
   when: device_secondary_flash is defined
