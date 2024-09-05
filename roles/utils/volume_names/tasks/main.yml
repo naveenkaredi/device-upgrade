@@ -19,7 +19,7 @@
       when: dir_output['stdout'][0][:40].find(' flash-1:') != -1
   
 - name: debug primary flash name
-  debug: var=device_primary_flash"
+  debug: var="device_primary_flash"
   when: device_primary_flash is defined
 
 - name: Device secondary volume name
@@ -42,5 +42,5 @@
       when: file_systems_output['stdout'][0].find(' flash-2:') != -1
 
 - name: debug secondary flash
-  debug: msg="{{ device_secondary_flash }}"
+  debug: var="device_secondary_flash"
   when: device_secondary_flash is defined
