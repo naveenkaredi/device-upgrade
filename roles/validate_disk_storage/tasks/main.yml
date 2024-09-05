@@ -3,10 +3,21 @@
   include_role:
     name: utils/volume_names
 
-- name: Assign primary flash name to artifacts
-  ansible.builtin.set_stats:
-    data:
-      device_primary_flash: "{{device_primary_flash}}"
+- block: 
+  - name: Preparing primary flash variable...
+    debug:
+      msg: "device_primary_flash_{{ inventory_hostname }}"
+    register: temp
+
+  - name: Preparing file variable....
+    debug:
+      msg: "{{ temp.msg | replace('-', '_') }}"
+    register: device_primary_flash_variable
+
+  - name: Assign primary flash name to artifacts
+    ansible.builtin.set_stats:
+      data:
+        "{{device_primary_flash_variable}}": "{{device_primary_flash}}"
 
 - block: 
   - name: Assign secondary flash name to artifacts
