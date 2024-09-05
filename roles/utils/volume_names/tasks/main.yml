@@ -20,7 +20,7 @@
 
     - name: Determine if primary volume name is {{ item }}
       set_fact: device_primary_flash="{{item}}"
-      when: dir_output['stdout'][0][:40].find(' item:') != -1
+      when: (dir_output['stdout'][0][:40].find(' x:') | replace('x', {{item}})) != -1
       loop: "{{ primary_flash_names.ios }}"
   
 - name: debug primary flash name
