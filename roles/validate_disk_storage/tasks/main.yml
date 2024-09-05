@@ -1,6 +1,6 @@
 ---
 - name: Fetch volume names
-  roles:
+  include_role:
     name: utils/volume_names
   # post_tasks:
   # - debug: var=device_primary_flash"
