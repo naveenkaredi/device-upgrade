@@ -24,6 +24,8 @@
   - name: Intermediate processing...
     set_fact: secondary_flash_memfree_mb={{ secondary_flash_memfree | int / 1000000 }}
 
+  - debug: var="secondary_flash_memfree_mb"
+
   - name: Assert that IOS device has free memory in secondary memory
     assert:
       that:
