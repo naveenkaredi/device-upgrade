@@ -7,6 +7,6 @@
   # - debug: var=device_secondary_flash"
       
 
-- debug: var=device_primary_flash"
+- debug: var="device_primary_flash"
 
-- debug: var=device_secondary_flash"
+- debug: var="device_secondary_flash"
