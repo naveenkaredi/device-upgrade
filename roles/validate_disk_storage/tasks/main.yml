@@ -15,8 +15,6 @@
         - "dir {{ device_secondary_flash }}: | in free"
     register: seconday_flash_space_output
 
-  - debug: var="seconday_flash_space_output"
-
   - name: Intermediate processing...
     set_fact: free_string={{ seconday_flash_space_output['stdout'][0][seconday_flash_space_output['stdout'][0].find('(')+1:] }}
 
