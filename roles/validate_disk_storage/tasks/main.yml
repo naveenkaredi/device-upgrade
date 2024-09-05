@@ -11,8 +11,8 @@
 - block: 
   - name: Assign secondary flash name to artifacts
     ansible.builtin.set_stats:
-    data:
-      device_secondary_flash: "{{device_secondary_flash}}"
+      data:
+        device_secondary_flash: "{{device_secondary_flash}}"
 
   - name: Gather only hardware facts
     cisco.ios.ios_facts:
