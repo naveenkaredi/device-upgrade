@@ -10,7 +10,7 @@
       - "show processes cpu"
   register: output
 
-- name: Assert that IOS device has free memory
+- name: Assert that IOS device has free memory in primary memory
   assert:
     that:
       - "'ios' == ansible_net_system"

@@ -2,11 +2,30 @@
 - name: Fetch volume names
   include_role:
     name: utils/volume_names
-  # post_tasks:
-  # - debug: var=device_primary_flash"
-  # - debug: var=device_secondary_flash"
-      
 
-- debug: var="device_primary_flash"
+- block: 
+  - name: Check free memory in secondary flash
+    ios_command:
+      commands:
+        - "dir {{ device_secondary_flash }}: | in free"
+    register: seconday_flash_space_output
 
-- debug: var="device_secondary_flash"
+  - debug: var="seconday_flash_space_output"
+
+  - name: Intermediate processing...
+    set_fact: free_string={{ seconday_flash_space_output['stdout'][0][seconday_flash_space_output['stdout'][0].find('(')+1:] }}
+
+  - name: Intermediate processing...
+    set_fact: secondary_flash_memfree={{ free_string[:free_string.find(' ')] }}
+
+  - name: Intermediate processing...
+    set_fact: secondary_flash_memfree_mb={{ secondary_flash_memfree | int / 1000000 }}
+
+  - name: Assert that IOS device has free memory in secondary memory
+    assert:
+      that:
+        - "'ios' == ansible_net_system"
+        - 1000 < {{ secondary_flash_memfree_mb }}
+      success_msg: Device is in healthy state.
+      fail_msg: Device should be manually verified.
+  when: device_secondary_flash is defined
