@@ -1,57 +1,46 @@
 ---
-- block: 
-  - name: Preparing Prechecks file variable...
-    debug:
-      msg: "prechecks_{{ inventory_hostname }}"
-    register: temp
+- name: Device primary volume name
+  ios_command:
+    commands:
+      - "dir"
+  register: dir_output
 
-  - name: Preparing Prechecks file variable....
-    debug:
-      msg: "{{ temp.msg | replace('-', '_') }}"
-    register: file
+- block:
+    - name: Determine if primary volume name is bootflash
+      set_fact: device_primary_flash="bootflash"
+      when: dir_output['stdout'][0][:40].find(' bootflash:') != -1
 
-  - name: Setting fact for device variable
-    set_fact:  
-      file_name="{{ file.msg }}"
+    - name: Determine if primary volume name is flash
+      set_fact: device_primary_flash="flash"
+      when: dir_output['stdout'][0][:40].find(' flash:') != -1
 
-  - debug: 
-      msg: "{{ lookup('vars', file_name) }}"
-    register: file_content
-    
-  - debug:
-      var: "file_content"
-
-- block: 
-  - name: Creates backup directory
-    file:
-      path: "prechecks"
-      state: directory
-    run_once: true
-
-  - name: Check directory stats
-    stat:
-      path: "prechecks"
-    register: dir
-
-  - name: Remove existing file if it exists
-    file:
-      path: "prechecks/{{file_name}}.txt"
-      state: absent
-    when: dir.stat.exists and dir.stat.isdir
-
-  - name: Creates file
-    file:
-      path: "prechecks/{{file_name}}.txt"
-      state: touch
-    when: dir.stat.exists and dir.stat.isdir
-    register: file_path
-
-- name: Write precheck contents to the file
-  copy:
-    content: "{{ file_content.msg }}"
-    dest: "prechecks/{{file_name}}"
+    - name: Determine if primary volume name is flash-1
+      set_fact: device_primary_flash="flash-1"
+      when: dir_output['stdout'][0][:40].find(' flash-1:') != -1
   
-- name: View file contents
-  shell: "cat prechecks/{{file_name}}"
-  register: cat_output
-- debug: var=cat_output
+- name: debug primary flash name
+  debug: msg="{{ device_primary_flash }}"
+  when: device_primary_flash is defined
+
+- name: Device secondary volume name
+  ios_command:
+    commands:
+      - "show file systems"
+  register: file_systems_output
+
+- block:
+    - name: Determine if secondary volume name is stby-bootflash
+      set_fact: device_secondary_flash="stby-bootflash"
+      when: file_systems_output['stdout'][0].find(' stby-bootflash:') != -1
+
+    - name: Determine if secondary volume name is slavebootflash
+      set_fact: device_secondary_flash="slavebootflash"
+      when: file_systems_output['stdout'][0].find(' slavebootflash:') != -1
+
+    - name: Determine if secondary volume name is flash-2
+      set_fact: device_secondary_flash="flash-2"
+      when: file_systems_output['stdout'][0].find(' flash-2:') != -1
+
+- name: debug secondary flash
+  debug: msg="{{ device_secondary_flash }}"
+  when: device_secondary_flash is defined

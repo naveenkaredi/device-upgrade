@@ -1,0 +1,57 @@
+---
+- block: 
+  - name: Preparing Prechecks file variable...
+    debug:
+      msg: "prechecks_{{ inventory_hostname }}"
+    register: temp
+
+  - name: Preparing Prechecks file variable....
+    debug:
+      msg: "{{ temp.msg | replace('-', '_') }}"
+    register: file
+
+  - name: Setting fact for device variable
+    set_fact:  
+      file_name="{{ file.msg }}"
+
+  - debug: 
+      msg: "{{ lookup('vars', file_name) }}"
+    register: file_content
+    
+  - debug:
+      var: "file_content"
+
+- block: 
+  - name: Creates prechecks directory
+    file:
+      path: "prechecks"
+      state: directory
+    run_once: true
+
+  - name: Check directory stats
+    stat:
+      path: "prechecks"
+    register: dir
+
+  - name: Remove existing file if it exists
+    file:
+      path: "prechecks/{{file_name}}.txt"
+      state: absent
+    when: dir.stat.exists and dir.stat.isdir
+
+  - name: Creates file
+    file:
+      path: "prechecks/{{file_name}}.txt"
+      state: touch
+    when: dir.stat.exists and dir.stat.isdir
+    register: file_path
+
+- name: Write precheck contents to the file
+  copy:
+    content: "{{ file_content.msg }}"
+    dest: "prechecks/{{file_name}}"
+  
+- name: View file contents
+  shell: "cat prechecks/{{file_name}}"
+  register: cat_output
+- debug: var=cat_output
