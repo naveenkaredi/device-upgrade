@@ -1,29 +1,64 @@
 ---
-- name: Gather only hardware facts
-  cisco.ios.ios_facts:
-    gather_subset:
-      - hardware
+- name: Find out playbooks runtime path
+  shell: pwd
+  register: playbook_path_output
+- debug: var=playbook_path_output.stdout
 
-- name: Gather CPU usage and free memory
-  ios_command:
-    commands:
-      - "show processes cpu"
-  register: output
+- block: 
+  - name: Creates prechecks directory
+    file:
+      path: "prechecks"
+      state: directory
+    run_once: true
 
-- name: Assert that IOS device has free memory
-  assert:
-    that:
-      - "'ios' == ansible_net_system"
-      - 1000 < ansible_net_memfree_mb | default('1001') | int
-    success_msg: Device is in healthy state.
-    fail_msg: Device should be manually verified.
-  when: ansible_net_memfree_mb is defined
+  - name: Check directory stats
+    stat:
+      path: "prechecks"
+    register: dir
 
-- name: Assert that IOS device has optimal CPU percentage
-  assert:
-    that:
-      - 85 > "item.split()[-1] | replace('%', '')" | int
-    success_msg: Device is in healthy state.
-    fail_msg: Device should be manually verified.
-  loop: "{{ output['stdout'][0] | regex_replace('\n', '|') | split('|') }}"
-  when: "'five minutes:' in item"
+  - name: List contents of runtime path
+    shell: "ls {{ playbook_path_output.stdout }}"
+    register: ls_output
+  - debug: var=ls_output
+
+  - name: Remove existing file if it exists
+    file:
+      path: "prechecks/prechecks_{{ inventory_hostname }}.txt"
+      state: absent
+    when: dir.stat.exists and dir.stat.isdir
+
+  - name: Creates file
+    file:
+      path: "prechecks/prechecks_{{ inventory_hostname }}.txt"
+      state: touch
+    when: dir.stat.exists and dir.stat.isdir
+    register: file_path
+
+- name: IOS run commands and capture
+  include_role:
+    name: utils/command_capture
+  vars:
+    command: "{{ item.cmd }}"
+    device_type: ios
+    folder_type: prechecks
+  loop: "{{ check_commands.ios }}"
+
+- block:
+  - name: "File contents of prechecks_{{ inventory_hostname }}.txt"
+    debug: msg="{{ lookup('file', 'prechecks/prechecks_{{ inventory_hostname }}.txt') }}"
+    register: file_content
+
+  - name: Preparing file variable...
+    debug:
+      msg: "prechecks_{{ inventory_hostname }}"
+    register: temp
+
+  - name: Preparing file variable....
+    debug:
+      msg: "{{ temp.msg | replace('-', '_') }}"
+    register: file
+
+  - name: Assign file contents to a variable
+    ansible.builtin.set_stats:
+      data:
+        "{{ file.msg }}": "{{ file_content.msg | join('') }}"

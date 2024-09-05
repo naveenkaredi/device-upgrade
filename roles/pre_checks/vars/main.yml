@@ -1,0 +1,5 @@
+---
+check_commands:
+  ios:
+    - cmd: show ip protocol
+    - cmd: show ip ospf nei
