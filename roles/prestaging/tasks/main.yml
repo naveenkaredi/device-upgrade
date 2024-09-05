@@ -18,10 +18,6 @@
     set_fact:  
       device_primary_flash="{{ lookup('vars', device_primary_flash_variable.msg) }}"
 
-- name: debug primary flash name
-  debug: var="device_primary_flash"
-  when: device_primary_flash is defined
-
 - block: 
   - name: Preparing secondary flash variable...
     debug:
@@ -37,6 +33,10 @@
     set_fact:  
       device_secondary_flash="{{ lookup('vars', device_secondary_flash_variable.msg) }}"
     ignore_errors: true
+
+- name: debug primary flash name
+  debug: var="device_primary_flash"
+  when: device_primary_flash is defined
 
 - name: debug secondary flash
   debug: var="device_secondary_flash"
