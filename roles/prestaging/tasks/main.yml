@@ -3,36 +3,34 @@
   ios_config:
     save_when: always
 
-- block: 
-  - name: Preparing primary flash variable...
-    debug:
-      msg: "device_primary_flash_{{ inventory_hostname }}"
-    register: temp
+- block:
+    - name: Preparing primary flash variable...
+      debug:
+        msg: "device_primary_flash_{{ inventory_hostname }}"
+      register: temp
 
-  - name: Preparing primary flash variable...
-    debug:
-      msg: "{{ temp.msg | replace('-', '_') }}"
-    register: device_primary_flash_variable
+    - name: Preparing primary flash variable...
+      debug:
+        msg: "{{ temp.msg | replace('-', '_') }}"
+      register: device_primary_flash_variable
 
-  - name: Setting fact for primary flash
-    set_fact:  
-      device_primary_flash="{{ lookup('vars', device_primary_flash_variable.msg) }}"
+    - name: Setting fact for primary flash
+      set_fact: device_primary_flash="{{ lookup('vars', device_primary_flash_variable.msg) }}"
 
-- block: 
-  - name: Preparing secondary flash variable...
-    debug:
-      msg: "device_secondary_flash_{{ inventory_hostname }}"
-    register: temp
+- block:
+    - name: Preparing secondary flash variable...
+      debug:
+        msg: "device_secondary_flash_{{ inventory_hostname }}"
+      register: temp
 
-  - name: Preparing secondary flash variable...
-    debug:
-      msg: "{{ temp.msg | replace('-', '_') }}"
-    register: device_secondary_flash_variable
+    - name: Preparing secondary flash variable...
+      debug:
+        msg: "{{ temp.msg | replace('-', '_') }}"
+      register: device_secondary_flash_variable
 
-  - name: Setting fact for secondary flash
-    set_fact:  
-      device_secondary_flash="{{ lookup('vars', device_secondary_flash_variable.msg) }}"
-    ignore_errors: true
+    - name: Setting fact for secondary flash
+      set_fact: device_secondary_flash="{{ lookup('vars', device_secondary_flash_variable.msg) }}"
+      ignore_errors: true
 
 - name: debug primary flash name
   debug: var="device_primary_flash"
@@ -41,3 +39,12 @@
 - name: debug secondary flash
   debug: var="device_secondary_flash"
   when: device_secondary_flash is defined
+# Remove inactive software image
+
+# Remote copy of image to primary flash
+
+# copy image from primary to secondary
+
+# Get md5 of IOS file in secondary flash
+
+# Assert that MD5 of secondary flash IOS file Is Correct
