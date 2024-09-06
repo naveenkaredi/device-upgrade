@@ -1,4 +1,6 @@
 ---
 - name: Ping devices
-  shell: "ping -c 1 -w 3 {{ host }}"
+  shell: "ping -c 1 -w 3 {{ device }}"
   register: ping_output
+
+- debug: var="ping_output"

@@ -1,14 +1,11 @@
 ---
 - name: Prepare device list
   set_fact:
-    devices: "{{ devices|default([]) + [ {'host': item, 'time': '10000'} ] }}"
+    devices: "{{ devices|default([]) + [ {'device': item, 'time': '10000'} ] }}"
   loop: "{{groups['devices']}}"
 
-- name: Ping devices
-  tasks: 
-  - name: Ping device
-    shell: "ping -c 1 -w 3 {{ item.host }}"
-    register: ping_output
-
-  - debug: var="ping_output"
+- name: Ping devices tasks
+  include_tasks: ping.yml
+  vars: 
+    device: "{{item.device}}"
   loop: "{{devices}}"
