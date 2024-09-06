@@ -6,8 +6,13 @@
 - debug: var="ping_output"
 
 - name: Intermediate Processing...
-  set_fact: ping_val={{ping_output['stdout_lines'][1][ping_output['stdout_lines'][1].find('time'):]}}
+  set_fact: str={{ping_output['stdout_lines'][1][ping_output['stdout_lines'][1].find('time'):]}}
+- debug: var="str"
+
+- name: Intermediate Processing...
+  set_fact: ping_val={{str[0:str.find(' ')}}
 - debug: var="ping_val"
+
 
 - name: Store ping values
   set_fact:
