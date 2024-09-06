@@ -17,12 +17,8 @@
     
 
 - name: test
-  set_fact:
-    cur: "ping_{{device}}"
+  debug:
+    msg: "{{ 'myvalue' | dict_kv('mykey') }}"
 
-- name: test
-  ansible.builtin.set_stats:
-      data:
-        "{{cur}}": "{{ cur|default([]) + [ {inventory_hostname: ping_val | float} ] }}"
 
 # https://www.freekb.net/Article?id=4636#:~:text=Here%20is%20how%20you%20can,%3A%20var%3A%20food%20...
