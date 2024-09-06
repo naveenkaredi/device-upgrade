@@ -6,5 +6,6 @@
 - debug: var="ping_output"
 
 - name: Store ping values
-  set_fact: 
-    "{{host_var}}_ping_{{device_var}}": "20"
+  ansible.builtin.set_stats:
+    data:
+      "{{host_var}}_ping_{{device_var}}": "20"
