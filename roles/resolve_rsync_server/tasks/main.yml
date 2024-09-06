@@ -1,9 +1,13 @@
 ---
-- name: Prepare device variables
+- name: Prepare device list
   set_fact:
     devices: "{{ devices|default([]) + [ {'host': item, 'time': '10000'} ] }}"
   loop: "{{groups['devices']}}"
 
-- debug: var="devices"
+- name: Ping devices
+  shell: "ping -c 1 -w 3 {{item.host}}"
+  loop: devices
+
+
   
 
