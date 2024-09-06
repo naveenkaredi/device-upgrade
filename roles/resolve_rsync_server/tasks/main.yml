@@ -3,6 +3,6 @@
   vars: 
     devices: []
   set_fact:
-    current_device: "{{ item | replace('-', '_')}}" + "{{device_number}}"
+    "current_device_{{device_number}}": "{{ item | replace('-', '_')}}"
     device_number: "{{ device_number | int + 1 }}"
   loop: "{{groups['devices']}}"
