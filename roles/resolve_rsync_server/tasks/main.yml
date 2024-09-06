@@ -1,7 +1,7 @@
 ---
 - name: Prepare device list
   set_fact:
-    devices: "{{ devices|default([]) + [ {'device': item, 'time': '10000', 'device_var': item | replace('-', '_')}, 'host_var': inventory_hostname | replace('-', '_') ] }}"
+    devices: "{{ devices|default([]) + [ {'device': item, 'time': '10000', 'device_var': item | replace('-', '_'), 'host_var': inventory_hostname | replace('-', '_') } ] }}"
   loop: "{{groups['devices']}}"
 
 # - name: Prepare Variable
