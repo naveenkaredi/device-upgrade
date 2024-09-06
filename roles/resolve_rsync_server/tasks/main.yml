@@ -5,4 +5,4 @@
     device: "{{item}}"
   loop: "{{groups['devices']}}"
 
-- debug: msg="{{ lookup('vars', ping) }}"
+- debug: msg="{{ lookup('vars', 'ping') }}"
