@@ -1,5 +1,5 @@
 ---
-- name: Resolve Rsync Server
+- name: Prepare ping values for rsync server
   hosts: rsync_hosts
   gather_facts: no
   strategy: linear

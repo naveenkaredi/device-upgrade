@@ -1,12 +1,4 @@
 ---
-- name: Prepare ping values
-  hosts: rsync_hosts
-  gather_facts: no
-  strategy: linear
-  tasks:
-    - import_role:
-        name: resolve_rsync_server
-    
 - name: Prestaging
   hosts: devices
   gather_facts: no
