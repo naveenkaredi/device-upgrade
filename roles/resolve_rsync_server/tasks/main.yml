@@ -1,5 +1,4 @@
 ---
-- name: Test
-  shell: ifconfig
-  register: output
-- debug: var=output.stdout
+- name: Find closest rsync server for devices
+  debug: msg="{{item}}"
+  loop: "{{groups['devices']}}"
