@@ -39,9 +39,13 @@
 - name: debug secondary flash
   debug: var="device_secondary_flash"
   when: device_secondary_flash is defined
+
 # Remove inactive software image
 
 # Remote copy of image to primary flash
+- name: Finding cloest rsync server
+  include_role:
+    name: utils/closest_server
 
 # copy image from primary to secondary
 
