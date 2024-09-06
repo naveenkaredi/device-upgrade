@@ -3,5 +3,5 @@
   vars: 
     devices: []
   set_fact: 
-    devices: "{{ devices|default([]) + [ rsync_host_item ] }}"
+    devices: "{{ devices|default([]) + [ 'rsync_host_'item ] }}"
   loop: "{{groups['devices']}}"
