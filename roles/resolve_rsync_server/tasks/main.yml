@@ -5,5 +5,4 @@
     device: "{{item}}"
   loop: "{{groups['devices']}}"
 
-- debug: msg="{{ item }}"
-  loop: "{{ lookup('list', 'ping') }}"
+- debug: msg="{{ lookup('list', 'ping', wantlist=True) }}"
