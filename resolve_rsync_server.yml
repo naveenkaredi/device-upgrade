@@ -1,0 +1,10 @@
+---
+- name: Resolve Rsync Server
+  hosts: rsync_servers
+  gather_facts: no
+  connection: network_cli
+  strategy: free
+  tasks:
+    - import_role:
+        name: resolve_rsync_server
+    

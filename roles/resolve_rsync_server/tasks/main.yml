@@ -1,0 +1,5 @@
+---
+- name: Test
+  shell: ifconfig
+  register: output
+- debug: var=output.stdout
