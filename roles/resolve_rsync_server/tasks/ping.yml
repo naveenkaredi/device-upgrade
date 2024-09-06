@@ -9,4 +9,4 @@
 
 - name: test
   set_fact: 
-    "{{device_var}}#{{host_var}}": "20"
+    "{{host_var}}_ping_{{device_var}}": "20"
