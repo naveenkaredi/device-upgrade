@@ -5,6 +5,9 @@
 
 - debug: var="ping_output"
 
+- name: Intermediate Processing...
+  set_fact: ping_val={{ping_output['stdout_lines'][1][ping_output['stdout_lines'][1].find('time'):]}}
+
 - name: Store ping values
   set_fact:
     ping_values: "{{ ping_values|default([]) + [ {'destination': device, 'source': inventory_hostname, 'value': '0'} ] }}"
