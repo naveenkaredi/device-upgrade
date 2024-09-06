@@ -1,5 +1,6 @@
 ---
 - name: Pinging servers
+  delegate_to: localhost
   shell: ping -c 1 -w 3 {{ item }}
   loop: "{{ rsync_hosts }}"
   ignore_errors: true
