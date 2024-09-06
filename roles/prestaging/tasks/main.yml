@@ -43,9 +43,7 @@
 # Remove inactive software image
 
 - name: Finding closest rsync server
-  include_role:
-    name: utils/closest_server
-
+  debug: msg="{{groups}}"
 # Remote copy of image to primary flash
 
 # copy image from primary to secondary
