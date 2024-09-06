@@ -4,3 +4,9 @@
   register: ping_output
 
 - debug: var="ping_output"
+- debug: var="inventory_hostname"
+- debug: var="cur_item"
+
+- name: test
+  set_fact:
+    cur_item: "{{  {'device': device, 'time': inventory_hostname, 'host': ''} }}"
