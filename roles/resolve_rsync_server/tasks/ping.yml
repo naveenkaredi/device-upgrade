@@ -4,9 +4,7 @@
   register: ping_output
 
 - debug: var="ping_output"
-# - debug: var="inventory_hostname"
-# - debug: var="cur_item"
 
-- name: test
+- name: Store ping values
   set_fact: 
     "{{host_var}}_ping_{{device_var}}": "20"
