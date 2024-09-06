@@ -2,8 +2,6 @@
 - name: Find closest rsync server for devices
   vars: 
     devices: []
-  set_fact:
-    temp: "rsync_host_{{item}}"
   set_fact: 
-    devices: "{{ devices|default([]) + [ temp ] }}"
+    devices: "{{ devices|default([]) + [ rsync_host_item ] }}"
   loop: "{{groups['devices']}}"
