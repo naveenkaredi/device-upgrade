@@ -1,4 +1,5 @@
 ---
 - name: Find closest rsync server for devices
-  debug: msg="{{item}}"
+  set_fact:
+    rsync_host_{{item}}: "Some value"
   loop: "{{groups['devices']}}"
