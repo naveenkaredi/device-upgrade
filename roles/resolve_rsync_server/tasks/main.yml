@@ -1,21 +1,22 @@
 ---
 - name: Prepare device list
   set_fact:
-    devices: "{{ devices|default([]) + [ {'device': item, 'time': '10000', 'variable': item | replace('-', '_')} ] }}"
+    devices: "{{ devices|default([]) + [ {'device': item, 'time': '10000', 'device_var': item | replace('-', '_')}, 'host_var': inventory_hostname | replace('-', '_') ] }}"
   loop: "{{groups['devices']}}"
 
-- name: Prepare Variable
-  ansible.builtin.set_stats:
-    data:
-      "rsync_host_{{ item.variable }}": "{{ inventory_hostname }}"
-    when: rsync_host_{{ item.variable }} is not defined
-  loop: "{{devices}}"
-
-# - name: Ping devices tasks
-#   include_tasks: ping.yml
-#   vars: 
-#     device: "{{item.device}}"
-#     cur_item: "{{item}}"
+# - name: Prepare Variable
+#   ansible.builtin.set_stats:
+#     data:
+#       "rsync_host_{{ item.variable }}": "{{ inventory_hostname }}"
+#     when: rsync_host_{{ item.variable }} is not defined
 #   loop: "{{devices}}"
 
-- debug: var="devices"
+- name: Ping devices tasks
+  include_tasks: ping.yml
+  vars: 
+    device: "{{item.device}}"
+    device_var: "{{item.device_var}}"
+    host_var: "{{item.host_var}}"
+  loop: "{{devices}}"
+
+# - debug: var="devices"
