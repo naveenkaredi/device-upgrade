@@ -18,7 +18,7 @@
 
 - name: test
   debug:
-    msg: "{{ 'myvalue' | dict_kv('mykey') }}"
+    msg: "{{ 'myvalue' | community.general.dict_kv('mykey') }}"
 
 
 # https://www.freekb.net/Article?id=4636#:~:text=Here%20is%20how%20you%20can,%3A%20var%3A%20food%20...
