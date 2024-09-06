@@ -1,6 +1,6 @@
 ---
 - name: Resolve Rsync Server
-  hosts: rsync_servers
+  hosts: rsync_hosts
   gather_facts: no
   connection: network_cli
   strategy: free
