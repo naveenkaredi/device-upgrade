@@ -9,6 +9,8 @@
   vars: 
     device: "{{item.device}}"
     cur_item: "{{item}}"
+  set_fact:
+    item.time: '123'
   loop: "{{devices}}"
 
 - debug: var="devices"
