@@ -1,6 +1,7 @@
 ---
 - debug: msg="{{ lookup('list', ping) }}"
   register: ping
+  run_once: true
 
 - debug: var="ping"
 
