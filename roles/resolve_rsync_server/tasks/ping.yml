@@ -8,4 +8,4 @@
 - name: Store ping values
   ansible.builtin.set_stats:
     data:
-      "{{host_var}}_ping_{{device_var}}": "20"
+      "ping": "{{ ping|default([]) + [ {'x': device_var, 'y': host_var, 'z': '0'} } ] }}"
