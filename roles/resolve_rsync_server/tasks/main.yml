@@ -10,3 +10,5 @@
     data:
       "ping": "{{ ping|default([]) + [ item ] }}"
   loop: "{{ lookup('list', ping_values) }}"
+
+- debug: var="ping_test"
