@@ -8,3 +8,4 @@
 - name: Store ping values
   set_fact:
     ping: "{{ ping|default([]) + [ {'destination': device, 'source': inventory_hostname, 'value': '0'} ] }}"
+    
