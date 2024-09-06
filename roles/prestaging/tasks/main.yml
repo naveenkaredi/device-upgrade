@@ -1,51 +1,52 @@
 ---
 - debug: msg="{{ lookup('list', ping) }}"
+  register: ping
 
-- name: Save running config before starting
-  ios_config:
-    save_when: always
+- debug: var="ping"
 
-- block:
-    - name: Preparing primary flash variable...
-      debug:
-        msg: "device_primary_flash_{{ inventory_hostname }}"
-      register: temp
+# - name: Save running config before starting
+#   ios_config:
+#     save_when: always
 
-    - name: Preparing primary flash variable...
-      debug:
-        msg: "{{ temp.msg | replace('-', '_') }}"
-      register: device_primary_flash_variable
+# - block:
+#     - name: Preparing primary flash variable...
+#       debug:
+#         msg: "device_primary_flash_{{ inventory_hostname }}"
+#       register: temp
 
-    - name: Setting fact for primary flash
-      set_fact: device_primary_flash="{{ lookup('vars', device_primary_flash_variable.msg) }}"
+#     - name: Preparing primary flash variable...
+#       debug:
+#         msg: "{{ temp.msg | replace('-', '_') }}"
+#       register: device_primary_flash_variable
 
-- block:
-    - name: Preparing secondary flash variable...
-      debug:
-        msg: "device_secondary_flash_{{ inventory_hostname }}"
-      register: temp
+#     - name: Setting fact for primary flash
+#       set_fact: device_primary_flash="{{ lookup('vars', device_primary_flash_variable.msg) }}"
 
-    - name: Preparing secondary flash variable...
-      debug:
-        msg: "{{ temp.msg | replace('-', '_') }}"
-      register: device_secondary_flash_variable
+# - block:
+#     - name: Preparing secondary flash variable...
+#       debug:
+#         msg: "device_secondary_flash_{{ inventory_hostname }}"
+#       register: temp
 
-    - name: Setting fact for secondary flash
-      set_fact: device_secondary_flash="{{ lookup('vars', device_secondary_flash_variable.msg) }}"
-      ignore_errors: true
+#     - name: Preparing secondary flash variable...
+#       debug:
+#         msg: "{{ temp.msg | replace('-', '_') }}"
+#       register: device_secondary_flash_variable
 
-- name: debug primary flash name
-  debug: var="device_primary_flash"
-  when: device_primary_flash is defined
+#     - name: Setting fact for secondary flash
+#       set_fact: device_secondary_flash="{{ lookup('vars', device_secondary_flash_variable.msg) }}"
+#       ignore_errors: true
 
-- name: debug secondary flash
-  debug: var="device_secondary_flash"
-  when: device_secondary_flash is defined
+# - name: debug primary flash name
+#   debug: var="device_primary_flash"
+#   when: device_primary_flash is defined
+
+# - name: debug secondary flash
+#   debug: var="device_secondary_flash"
+#   when: device_secondary_flash is defined
 
 # Remove inactive software image
 
-- name: Finding closest rsync server
-  debug: msg="{{groups}}"
 # Remote copy of image to primary flash
 
 # copy image from primary to secondary
