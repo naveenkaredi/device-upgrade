@@ -10,7 +10,7 @@
 - debug: var="str"
 
 - name: Intermediate Processing...
-  set_fact: ping_val={{str[0:str.find(' ')]}}
+  set_fact: ping_val={{str[5:str.find(' ')]}}
 - debug: var="ping_val"
 
 
