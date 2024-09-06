@@ -1,4 +1,6 @@
 ---
+- debug: msg="{{ lookup('list', ping) }}"
+
 - name: Save running config before starting
   ios_config:
     save_when: always
