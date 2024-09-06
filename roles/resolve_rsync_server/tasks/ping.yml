@@ -6,6 +6,5 @@
 - debug: var="ping_output"
 
 - name: Store ping values
-  ansible.builtin.set_stats:
-    data:
-      "ping": "{{ ping|default([]) + [ {'destination': device, 'source': inventory_hostname, 'value': '0'} ] }}"
+  set_fact:
+    ping: "{{ ping|default([]) + [ {'destination': device, 'source': inventory_hostname, 'value': '0'} ] }}"
