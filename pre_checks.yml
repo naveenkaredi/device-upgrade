@@ -1,6 +1,6 @@
 ---
 - name: Performing Pre-Checks
-  hosts: all
+  hosts: devices
   gather_facts: no
   connection: network_cli
   strategy: free

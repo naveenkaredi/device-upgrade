@@ -1,6 +1,6 @@
 ---
 - name: Backup Configurations
-  hosts: all
+  hosts: devices
   gather_facts: no
   connection: network_cli
   strategy: free
