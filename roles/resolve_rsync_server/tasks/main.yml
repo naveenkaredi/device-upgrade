@@ -1,13 +1,13 @@
 ---
 - name: Prepare device list
   set_fact:
-    devices: "{{ devices|default([]) + [ {'device': item, 'time': '10000', 'host': ''} ] }}"
+    devices: "{{ devices|default([]) + [ {'device': item | replace('-', '_'), 'time': '10000', 'host': ''} ] }}"
   loop: "{{groups['devices']}}"
 
-- name: Transform device name
-  set_fact: 
-    item.device: "{{ item.device | replace('-', '_') }}"
-  loop: "{{devices}}"
+# - name: Transform device name
+#   set_fact: 
+#     "{{ item.device }}": "{{ item.device | replace('-', '_') }}"
+#   loop: "{{devices}}"
 
 - name: Ping devices tasks
   include_tasks: ping.yml
