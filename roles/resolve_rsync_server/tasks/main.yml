@@ -6,7 +6,7 @@
 
 - name: Ping devices
   shell: "ping -c 1 -w 3 {{item.host}}"
-  loop: devices
+  loop: "{{devices}}"
 
 
   
