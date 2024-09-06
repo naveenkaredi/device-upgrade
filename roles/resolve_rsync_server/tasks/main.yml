@@ -6,8 +6,11 @@
 
 - name: Ping devices
   shell: "ping -c 1 -w 3 {{item.host}}"
+  register: ping_output_{{item.host}}
   loop: "{{devices}}"
 
+- debug: var="ping_output_{{item.host}}"
+  loop: "{{devices}}"
 
   
 
