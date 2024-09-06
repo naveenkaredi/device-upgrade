@@ -8,7 +8,7 @@
   ansible.builtin.set_stats:
     data:
       "rsync_host_{{ item.variable }}": "{{ inventory_hostname }}"
-  when: rsync_host_{{ item.variable }} is not defined
+    when: rsync_host_{{ item.variable }} is not defined
   loop: "{{devices}}"
 
 # - name: Ping devices tasks
