@@ -1,0 +1,4 @@
+---
+- name: Ping devices
+  shell: "ping -c 1 -w 3 {{ host }}"
+  register: ping_output

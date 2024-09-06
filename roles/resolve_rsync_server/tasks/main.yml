@@ -5,12 +5,10 @@
   loop: "{{groups['devices']}}"
 
 - name: Ping devices
-  shell: "ping -c 1 -w 3 {{item.host}}"
-  register: ping_output_{{item.host}}
+  tasks: 
+  - name: Ping device
+    shell: "ping -c 1 -w 3 {{ item.host }}"
+    register: ping_output
+
+  - debug: var="ping_output"
   loop: "{{devices}}"
-
-- debug: var="ping_output_{{item.host}}"
-  loop: "{{devices}}"
-
-  
-
