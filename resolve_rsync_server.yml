@@ -2,7 +2,7 @@
 - name: Resolve Rsync Server
   hosts: rsync_hosts
   gather_facts: no
-  strategy: free
+  strategy: linear
   tasks:
     - import_role:
         name: resolve_rsync_server
