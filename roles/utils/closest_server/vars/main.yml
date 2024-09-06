@@ -1,0 +1,9 @@
+---
+rsync_hosts:
+  - phx-netft-lp900
+  - ash-netft-lp900
+  - fra-netft-lp900
+  - bom-netft-lp900
+  - syd-netft-lp900
+  - hnd-netft-lp900
+

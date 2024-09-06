@@ -1,3 +1,5 @@
 ---
-- name: Test
-  debug: msg="test"
+- name: Pinging servers
+  shell: ping -c 1 -w 3 {{ item }}
+  loop: "{{ rsync_hosts }}"
+  ignore_errors: true
