@@ -1,12 +1,7 @@
 ---
-- name: Fetch volume names
+- name: Preparing prechecks content for evaluation
   include_role:
     name: utils/prepare_prechecks_content
-  
-- name: View file contents
-  shell: "cat prechecks/{{file_name}}"
-  register: cat_output
-- debug: var=cat_output
 
 - name: Creates postchecks directory
   file:
