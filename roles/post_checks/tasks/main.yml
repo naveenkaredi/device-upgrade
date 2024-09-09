@@ -41,9 +41,9 @@
   loop: "{{ check_commands.ios }}"
 
 - name: Creates analysis directory
-    file:
-      path: "post_analysis/"
-      state: directory
+  file:
+    path: "post_analysis/"
+    state: directory
 
 - name: Remove existing file if it exists
   file:
