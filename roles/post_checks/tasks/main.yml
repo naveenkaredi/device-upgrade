@@ -28,83 +28,80 @@
     set_fact:  
       file_name="{{ temp.msg }}"
 
-  - debug:
-      var: "file_name"
+- block: 
+  - name: Creates prechecks directory
+    file:
+      path: "prechecks"
+      state: directory
+    run_once: true
 
-# - block: 
-#   - name: Creates prechecks directory
-#     file:
-#       path: "prechecks"
-#       state: directory
-#     run_once: true
+  - name: Check directory stats
+    stat:
+      path: "prechecks"
+    register: dir
 
-#   - name: Check directory stats
-#     stat:
-#       path: "prechecks"
-#     register: dir
+  - name: Remove existing file if it exists
+    file:
+      path: "prechecks/{{file_name}}.txt"
+      state: absent
+    when: dir.stat.exists and dir.stat.isdir
 
-#   - name: Remove existing file if it exists
-#     file:
-#       path: "prechecks/{{file_name}}.txt"
-#       state: absent
-#     when: dir.stat.exists and dir.stat.isdir
+  - name: Creates file
+    file:
+      path: "prechecks/{{file_name}}.txt"
+      state: touch
+    when: dir.stat.exists and dir.stat.isdir
+    register: file_path
 
-#   - name: Creates file
-#     file:
-#       path: "prechecks/{{file_name}}.txt"
-#       state: touch
-#     when: dir.stat.exists and dir.stat.isdir
-#     register: file_path
-
-# - name: Write precheck contents to the file
-#   copy:
-#     content: "{{ file_content.msg }}"
-#     dest: "prechecks/{{file_name}}"
+- name: Write precheck contents to the file
+  copy:
+    content: "{{ file_content.msg }}"
+    dest: "prechecks/{{file_name}}"
   
-# # - name: View file contents
-# #   shell: "cat prechecks/{{file_name}}"
-# #   register: cat_output
-# # - debug: var=cat_output
+- name: View file contents
+  shell: "cat prechecks/{{file_name}}"
+  register: cat_output
+- debug: var=cat_output
 
-# - name: Creates postchecks directory
-#   file:
-#     path: "postchecks"
-#     state: directory
-#   run_once: true
+- name: Creates postchecks directory
+  file:
+    path: "postchecks"
+    state: directory
+  run_once: true
 
-# - name: Check directory stats
-#   stat:
-#     path: "postchecks"
-#   register: dir
+- name: Check directory stats
+  stat:
+    path: "postchecks"
+  register: dir
 
-# - name: Setting fact for device variable
-#   set_fact:  
-#     postchecks_file_name="postchecks_{{ inventory_hostname }}"
+- name: Setting fact for device variable
+  set_fact:  
+    postchecks_file_name="postchecks_{{ inventory_hostname }}"
 
-# - name: Remove existing file if it exists
-#   file:
-#     path: "postchecks/{{postchecks_file_name}}.txt"
-#     state: absent
-#   when: dir.stat.exists and dir.stat.isdir
+- name: Remove existing file if it exists
+  file:
+    path: "postchecks/{{postchecks_file_name}}.txt"
+    state: absent
+  when: dir.stat.exists and dir.stat.isdir
 
-# - name: Creates file
-#   file:
-#     path: "postchecks/{{postchecks_file_name}}.txt"
-#     state: touch
-#   when: dir.stat.exists and dir.stat.isdir
-#   register: file_path
+- name: Creates file
+  file:
+    path: "postchecks/{{postchecks_file_name}}.txt"
+    state: touch
+  when: dir.stat.exists and dir.stat.isdir
+  register: file_path
 
-# - name: IOS run commands and capture
-#   include_role:
-#     name: utils/command_capture
-#   vars:
-#     command: "{{ item.cmd }}"
-#     device_type: ios
-#     folder_type: postchecks
-#   loop: "{{ check_commands.ios }}"
+- name: IOS run commands and capture
+  include_role:
+    name: utils/command_capture
+  vars:
+    command: "{{ item.cmd }}"
+    device_type: ios
+    folder_type: postchecks
+  loop: "{{ check_commands.ios }}"
 
-# - name: View file contents
-#   shell: "cat postchecks/{{postchecks_file_name}}.txt"
-#   register: output
-# - debug: var=output
+- name: View file contents
+  shell: "cat postchecks/{{postchecks_file_name}}.txt"
+  register: output
+- debug: var=output
 
