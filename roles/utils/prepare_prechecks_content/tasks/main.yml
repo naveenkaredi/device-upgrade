@@ -56,9 +56,9 @@
 - name: Write precheck contents to the file
   copy:
     content: "{{ file_content.msg }}"
-    dest: "prechecks/{{file_name}}"
+    dest: "prechecks/{{file_name}}.txt"
 
 - name: View prechecks file contents
-  shell: "cat prechecks/{{file_name}}"
+  shell: "cat prechecks/{{file_name}}.txt"
   register: output
 - debug: var=output
