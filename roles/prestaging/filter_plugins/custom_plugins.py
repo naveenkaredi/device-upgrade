@@ -14,6 +14,6 @@ class FilterModule(object):
         mn_value = 10000000
         for server, value in current_data.items():
             if value < mn_value:
-                value = mn_value
+                mn_value = value
                 rsync_server = server
         return rsync_server
