@@ -7,6 +7,8 @@ class FilterModule(object):
     def get_rsync_server(self, data):
         rsync_server = ""
         mn_value = 10000000
+        print("TESETADSF")
+        print(data)
         for server, value in data.items():
             if value < mn_value:
                 value = mn_value
