@@ -1,0 +1,10 @@
+---
+- name: Performing Post-Checks
+  hosts: devices
+  gather_facts: no
+  connection: network_cli
+  strategy: free
+  tasks:
+    - import_role:
+        name: post_checks
+    
