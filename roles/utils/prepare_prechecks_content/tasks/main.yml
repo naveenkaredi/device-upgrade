@@ -58,7 +58,7 @@
     content: "{{ file_content.msg }}"
     dest: "prechecks/{{file_name}}"
 
-- name: View file contents
+- name: View prechecks file contents
   shell: "cat prechecks/{{file_name}}"
-  register: cat_output
-- debug: var=cat_output
+  register: output
+- debug: var=output

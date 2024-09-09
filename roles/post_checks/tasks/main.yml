@@ -40,6 +40,11 @@
     folder_type: postchecks
   loop: "{{ check_commands.ios }}"
 
+- name: View postchecks file contents
+  shell: "cat postchecks/{{postchecks_file_name}}.txt"
+  register: output
+- debug: var=output
+
 - name: Creates analysis directory
   file:
     path: "post_analysis/"
