@@ -5,7 +5,7 @@
 - debug: msg="{{ current_ping_values | get_rsync_server }}"
   register: rsync_host
 
-- debug: var="rsync_host"
+- debug: var="rsync_host.msg"
 
 # - name: Save running config before starting
 #   ios_config:
