@@ -51,7 +51,32 @@
     content: "{{ file_content.msg }}"
     dest: "prechecks/{{file_name}}"
   
-- name: View file contents
-  shell: "cat prechecks/{{file_name}}"
-  register: cat_output
-- debug: var=cat_output
+# - name: View file contents
+#   shell: "cat prechecks/{{file_name}}"
+#   register: cat_output
+# - debug: var=cat_output
+
+- name: Creates postchecks directory
+  file:
+    path: "postchecks"
+    state: directory
+  run_once: true
+
+- name: Check directory stats
+  stat:
+    path: "postchecks"
+  register: dir
+
+- name: Preparing Postchecks file variable....
+  debug:
+    msg: "{{ file_name | replace('pre', 'post') }}"
+  register: file
+
+- name: Setting fact for device variable
+  set_fact:  
+    postchecks_file_name="{{ file.msg }}"
+
+- name: View contents
+  shell: "ls"
+  register: output
+- debug: var=output
