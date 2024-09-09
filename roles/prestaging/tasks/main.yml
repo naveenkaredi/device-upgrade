@@ -2,7 +2,7 @@
 - debug: var="ping.msg['{{ inventory_hostname }}']"
   register: current_ping_values
   
-- debug: msg="{{ current_ping_values.msg | get_rsync_server }}"
+- debug: msg="{{ current_ping_values | get_rsync_server }}"
 
 # - name: Save running config before starting
 #   ios_config:
