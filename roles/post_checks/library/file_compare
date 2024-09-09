@@ -88,8 +88,8 @@ def main():
     module = AnsibleModule(
         argument_spec=dict(
             host=dict(required=True, type='str'),
-            prechecks_path=dict(required=True, type='str', no_log=True),
-            postchecks_path=dict(required=True, type='str', no_log=True)
+            prechecks_path=dict(required=True, type='str'),
+            postchecks_path=dict(required=True, type='str')
         ),
         supports_check_mode=False,
     )

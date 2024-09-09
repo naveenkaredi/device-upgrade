@@ -60,7 +60,6 @@
     host: "{{ inventory_hostname }}"
     prechecks_path: "prechecks/{{file_name}}.txt"
     postchecks_path: "postchecks/{{postchecks_file_name}}.txt"
-  no_log: true
 
 - name: View post analysis file contents
   shell: "post_analysis/CMD_DELTA_{{ inventory_hostname }}.txt"
