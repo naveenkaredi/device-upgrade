@@ -89,7 +89,17 @@
   when: dir.stat.exists and dir.stat.isdir
   register: file_path
 
+- name: IOS run commands and capture
+  include_role:
+    name: utils/command_capture
+  vars:
+    command: "{{ item.cmd }}"
+    device_type: ios
+    folder_type: postchecks
+  loop: "{{ check_commands.ios }}"
+
 - name: View file contents
-  shell: "ls postchecks"
+  shell: "cat postchecks/{{postchecks_file_name}}.txt"
   register: output
 - debug: var=output
+

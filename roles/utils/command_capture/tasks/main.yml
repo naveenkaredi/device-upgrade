@@ -16,7 +16,7 @@
     set_fact: text="{{ ios_output }}"
     when: ios_output is defined and ios_output.stdout is defined
 
-  - name: Add {{ command }} to precheck text file
+  - name: Add {{ command }} to {{ folder_type }} text file
     ansible.builtin.blockinfile:
       path: "{{ folder_type }}/{{ folder_type }}_{{ inventory_hostname }}.txt"
       marker: "################## {mark} OF {{ command }} OUTPUT ##################\n\n\n"
