@@ -1,5 +1,6 @@
 ---
-- debug: var="ping['{{ inventory_hostname }}']"
+- debug: var="ping.msg"
+- debug: var="ping.msg['{{ inventory_hostname }}']"
 
 # - name: Save running config before starting
 #   ios_config:
