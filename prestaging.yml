@@ -3,6 +3,7 @@
   hosts: devices
   gather_facts: no
   strategy: linear
+  run_once: true
   tasks:
     - import_role:
         name: ping_transform
