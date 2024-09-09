@@ -62,6 +62,6 @@
     postchecks_path: "postchecks/{{postchecks_file_name}}.txt"
 
 - name: View post analysis file contents
-  shell: "post_analysis/CMD_DELTA_{{ inventory_hostname }}.txt"
-  register: cat_output
-- debug: var=cat_output
+  shell: "cat post_analysis/CMD_DELTA_{{ inventory_hostname }}.txt"
+  register: output
+- debug: var=output
