@@ -65,7 +65,7 @@ class CommandOutputCheck(object):
                 differ = Differ()
                 preresults = f'\n******FOUND DELTAS FOR HOST: {self.host} *************\n'
                 results = [l for l in differ.compare(pre_file.readlines(), post_file.readlines())]
-            print(results)
+            print("RESULTS: " + str(results))
             if results:
                 changes_only = '\n'.join([l for l in results if l.startswith(
                     '+ ') or l.startswith('- ') or l.startswith('? ')])
