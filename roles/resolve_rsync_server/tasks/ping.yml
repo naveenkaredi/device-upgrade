@@ -14,7 +14,3 @@
 - name: Store ping values
   set_fact:
     ping_values: "{{ ping_values|default([]) + [ {'destination': device, 'source': inventory_hostname, 'value': ping_val | float } ] }}"
-
-- name: test
-  debug:
-    msg: "{{ ping_values | transform }}"

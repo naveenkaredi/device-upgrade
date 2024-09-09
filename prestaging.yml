@@ -1,4 +1,12 @@
 ---
+- name: Ping Values Transformation
+  hosts: devices
+  gather_facts: no
+  strategy: linear
+  tasks:
+    - import_role:
+        name: ping_transform
+
 - name: Prestaging
   hosts: devices
   gather_facts: no
