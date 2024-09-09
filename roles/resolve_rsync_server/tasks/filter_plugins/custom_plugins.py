@@ -5,6 +5,4 @@ class FilterModule(object):
         }
 
     def transform(self, data):
-        return {
-            "test": "test"
-        }
+        return ["test"]
