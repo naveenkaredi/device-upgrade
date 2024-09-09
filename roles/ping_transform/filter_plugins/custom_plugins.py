@@ -7,7 +7,10 @@ class FilterModule(object):
     def transform(self, data):
         res = []
         idx_mappings = {}
-        return { 'd1': {'f', 'd'}, 'd2': {'f', 'h'}}
+        return { 
+            'd1': {'f': 'd'}, 
+            'd2': {'f': 'h'}
+        }
        
         # for idx in range(0, len(data)):
         #     item = data[idx]
