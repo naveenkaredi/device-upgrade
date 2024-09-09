@@ -40,3 +40,24 @@
     folder_type: postchecks
   loop: "{{ check_commands.ios }}"
 
+- name: Creates analysis directory
+    file:
+      path: "post_analysis/"
+      state: directory
+
+- name: Remove existing file if it exists
+  file:
+    path: "post_analysis/CMD_DELTA_{{ inventory_hostname }}.txt"
+    state: absent
+
+- name: Creates file
+  file:
+    path: "post_analysis/CMD_DELTA_{{ inventory_hostname }}.txt"
+    state: touch
+
+- name: Analyze precheck and postcheck command outputs
+  file_compare:
+    host: "{{ inventory_hostname }}"
+    prechecks_path: "prechecks/{{file_name}}.txt"
+    postchecks_path: "postchecks/{{postchecks_file_name}}.txt"
+  no_log: true
