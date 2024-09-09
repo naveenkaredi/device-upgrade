@@ -1,8 +1,5 @@
 ---
-# - debug: msg="{{ lookup('list', ping) }}"
-#   register: ping
-
-- debug: var="ping"
+- debug: var="ping[{{ inventory_hostname }}]"
 
 # - name: Save running config before starting
 #   ios_config:
