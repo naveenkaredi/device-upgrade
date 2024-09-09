@@ -1,7 +1,7 @@
-- debug: msg="{{ lookup('list', ping) }}"
+- debug: msg="{{ lookup('list', ping_values) }}"
+  register: ping_values
+
+- debug: msg="{{ ping_values | transform }}"
   register: ping
 
-- debug: msg="{{ ping | transform }}"
-  register: transformed_ping
-
-- debug: var="transformed_ping"
+- debug: var="ping"

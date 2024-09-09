@@ -8,5 +8,5 @@
 - name: Preparing artifact
   ansible.builtin.set_stats:
     data:
-      "ping": "{{ ping|default([]) + [ item ] }}"
+      "ping_values": "{{ ping|default([]) + [ item ] }}"
   loop: "{{ lookup('list', ping_values) }}"

@@ -2,7 +2,7 @@
 # - debug: msg="{{ lookup('list', ping) }}"
 #   register: ping
 
-- debug: var="transformed_ping"
+- debug: var="ping"
 
 # - name: Save running config before starting
 #   ios_config:
