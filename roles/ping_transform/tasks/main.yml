@@ -2,6 +2,6 @@
   register: ping
 
 - debug: msg="{{ ping | transform }}"
-  register: ping
+  register: transformed_ping
 
-- debug: var="ping"
+- debug: var="transformed_ping"
