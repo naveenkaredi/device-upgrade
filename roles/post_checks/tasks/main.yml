@@ -76,7 +76,20 @@
   set_fact:  
     postchecks_file_name="{{ file.msg }}"
 
-- name: View contents
-  shell: "ls"
+- name: Remove existing file if it exists
+  file:
+    path: "postchecks/{{postchecks_file_name}}.txt"
+    state: absent
+  when: dir.stat.exists and dir.stat.isdir
+
+- name: Creates file
+  file:
+    path: "postchecks/{{postchecks_file_name}}.txt"
+    state: touch
+  when: dir.stat.exists and dir.stat.isdir
+  register: file_path
+
+- name: View file contents
+  shell: "ls postchecks"
   register: output
 - debug: var=output
