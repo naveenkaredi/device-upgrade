@@ -10,7 +10,7 @@
   debug: msg="{{ ansible_net_image }}"
   when: output is defined
 
-- name: Assert That It is Running The Desired boot Image
+- name: Assert That It is not Running The Desired boot Image
   assert:
     that:
       - expected_os_version not in ansible_net_image

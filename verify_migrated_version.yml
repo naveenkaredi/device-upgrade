@@ -1,10 +1,10 @@
 ---
-- name: Verify the OS
+- name: Verify the migrated version
   hosts: devices
   gather_facts: no
   connection: network_cli
   strategy: free
   tasks:
     - import_role:
-        name: os_verification
+        name: verify_migrated_version
     
