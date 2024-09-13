@@ -1,3 +1,21 @@
 ---
 - name: Upgrading The Switch
   debug: msg="Upgrading Switch {{inventory_hostname}}"
+
+- block:
+    - name: Preparing primary flash variable...
+      debug:
+        msg: "device_primary_flash_{{ inventory_hostname }}"
+      register: temp
+
+    - name: Preparing primary flash variable...
+      debug:
+        msg: "{{ temp.msg | replace('-', '_') }}"
+      register: device_primary_flash_variable
+
+    - name: Setting fact for primary flash
+      set_fact: device_primary_flash="{{ lookup('vars', device_primary_flash_variable.msg) }}"
+
+- name: debug primary flash name
+  debug: var="device_primary_flash"
+  when: device_primary_flash is defined

@@ -21,15 +21,6 @@
 
 # Remove inactive software image
 
-# - name: Assert that IOS device has free memory in primary memory after removing inactive images
-#   assert:
-#     that:
-#       - "'ios' == ansible_net_system"
-#       - 1000 < ansible_net_memfree_mb | default('1001') | int
-#     success_msg: Device is in healthy state.
-#     fail_msg: Device should be manually verified.
-#   when: ansible_net_memfree_mb is defined
-
 # Remote copy of image to primary flash
 
 # copy image from primary to secondary
