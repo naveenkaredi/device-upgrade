@@ -57,7 +57,7 @@
       - command: "dir | inc {{ expected_os_version }}"
   register: flash_output
 
-- debug: msg={{flash_output}}
+- debug: msg="{{flash_output}}"
 # - name: Remote copy of IOS image to primary flash
 #   ios_command:
 #     commands:
