@@ -51,20 +51,47 @@
         fail_msg: Device should be manually verified.
       when: secondary_flash_memfree_mb is defined
 
-- debug: var="copy scp://{{ rsync_u }}:{{ rsync_p }}@{{ rsync_host.msg }}/u01/svc_rsync/rsynced_data/IOS/{{ expected_os_version }} {{ device_primary_flash }}:/"
+- name: Remote copy of IOS image to primary flash
+  ios_command:
+    commands:
+      - command: "copy scp://{{ rsync_u }}:{{ rsync_p }}@{{ rsync_host.msg }}/u01/svc_rsync/rsynced_data/IOS/{{ expected_os_version }} {{ device_primary_flash }}:/"
+        prompt: "Destination filename"
+        answer: "\r"
+  vars:
+    ansible_command_timeout: 10800
 
-# - name: Remote copy of IOS image to primary flash
-#   ios_command:
-#     commands:
-#       - command: "copy scp://{{ rsync_u }}:{{ rsync_p }}@{{ rsync_host.msg }}/u01/svc_rsync/rsynced_data/IOS/{{ expected_os_version }} {{ device_primary_flash }}:/"
-#         prompt: "Destination filename"
-#         answer: "\r"
-#   vars:
-#     ansible_command_timeout: 10800
-#   register: output
+- name: Get md5 of IOS file in primary flash
+  ios_command:
+    commands:
+      - "verify /md5 {{ device_primary_flash }}:/{{ expected_os_version }}"
+  register: output
 
-# copy image from primary to secondary
+- name: Assert that MD5 of primary flash IOS file Is Correct
+  assert:
+    that:
+      - md5_value == "{{ output['stdout'][0].split('=')[-1] | replace(' ', '') }}"
 
-# Get md5 of IOS file in secondary flash
+- block:
+    - name: Copy IOS image from primary to secondary flash
+      cli_command:
+        command: "copy {{ device_primary_flash }}:/{{ expected_os_version }} {{ device_secondary_flash }}:/"
+        check_all: True
+        prompt:
+          - "Destination filename"
+          - "Do you want to"
+        answer:
+          - "{{ expected_os_version }}"
+          - "y"
 
-# Assert that MD5 of secondary flash IOS file Is Correct
+    - name: Get md5 of IOS file in secondary flash
+      ios_command:
+        commands:
+          - "verify /md5 {{ device_secondary_flash }}:/{{ expected_os_version }}"
+      register: output
+
+    - name: Assert that MD5 of secondary flash IOS file Is Correct
+      assert:
+        that:
+          - md5_value == "{{ output['stdout'][0].split('=')[-1] | replace(' ', '') }}"
+  when: device_secondary_flash is defined
+
