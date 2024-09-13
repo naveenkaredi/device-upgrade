@@ -1,0 +1,17 @@
+---
+- name: Check free memory in primary flash
+  ios_command:
+    commands:
+      - "dir {{ device_primary_flash }}: | in free"
+  register: primary_flash_space_output
+
+- name: Intermediate processing...
+  set_fact: free_string={{ primary_flash_space_output['stdout'][0][primary_flash_space_output['stdout'][0].find('(')+1:] }}
+
+- name: Intermediate processing...
+  set_fact: primary_flash_memfree={{ free_string[:free_string.find(' ')] }}
+
+- name: Intermediate processing...
+  set_fact: primary_flash_memfree_mb={{ primary_flash_memfree | int / 1000000 }}
+
+- debug: var="primary_flash_memfree_mb"

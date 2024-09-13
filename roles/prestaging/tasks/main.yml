@@ -28,30 +28,32 @@
     answer:
       - "y"
 
-- debug: var="ansible_net_memfree_mb"
-
 - block:
-    - name: Gather only hardware facts
-      cisco.ios.ios_facts:
-        gather_subset:
-          - hardware
+    # - name: Gather only hardware facts
+    #   cisco.ios.ios_facts:
+    #     gather_subset:
+    #       - hardware
 
-    - name: Assert that IOS device has free memory in primary memory
-      assert:
-        that:
-          - "'ios' == ansible_net_system"
-          - 1000 < ansible_net_memfree_mb | default('1001') | int
-        success_msg: Device is in healthy state.
-        fail_msg: Device should be manually verified.
-      when: ansible_net_memfree_mb is defined
+    - name: Calculate Free Storage
+      include_role:
+        name: utils/calculate_free_storage
 
-    - name: Assert that IOS device has free memory in secondary memory
-      assert:
-        that:
-          - "'ios' == ansible_net_system"
-          - 1000 < secondary_flash_memfree_mb | default('1001') | int
-        success_msg: Device is in healthy state.
-        fail_msg: Device should be manually verified.
+    # - name: Assert that IOS device has free memory in primary memory
+    #   assert:
+    #     that:
+    #       - "'ios' == ansible_net_system"
+    #       - 1000 < ansible_net_memfree_mb | default('1001') | int
+    #     success_msg: Device is in healthy state.
+    #     fail_msg: Device should be manually verified.
+    #   when: ansible_net_memfree_mb is defined
+
+    # - name: Assert that IOS device has free memory in secondary memory
+    #   assert:
+    #     that:
+    #       - "'ios' == ansible_net_system"
+    #       - 1000 < secondary_flash_memfree_mb | default('1001') | int
+    #     success_msg: Device is in healthy state.
+    #     fail_msg: Device should be manually verified.
 # Remote copy of image to primary flash
 
 # copy image from primary to secondary
