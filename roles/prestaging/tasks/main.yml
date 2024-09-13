@@ -19,14 +19,14 @@
   debug: var="device_secondary_flash"
   when: device_secondary_flash is defined
 
-# - name: Removing inactive software images
-#   cli_command:
-#     command: "install remove inactive"
-#     check_all: True
-#     prompt:
-#       - "Do you want to remove the above files"
-#     answer:
-#       - "y"
+- name: Removing inactive software images
+  cli_command:
+    command: "install remove inactive"
+    check_all: True
+    prompt:
+      - "Do you want to remove the above files"
+    answer:
+      - "y"
 
 - block: 
   - name: Gather only hardware facts
