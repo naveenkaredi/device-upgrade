@@ -4,7 +4,7 @@
     gather_subset:
       - hardware
 
-- name: Gather CPU usage and free memory
+- name: Gather CPU usage
   ios_command:
     commands:
       - "show processes cpu"

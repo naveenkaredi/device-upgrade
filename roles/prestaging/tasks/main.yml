@@ -11,35 +11,6 @@
   ios_config:
     save_when: always
 
-# - block:
-#     - name: Preparing primary flash variable...
-#       debug:
-#         msg: "device_primary_flash_{{ inventory_hostname }}"
-#       register: temp
-
-#     - name: Preparing primary flash variable...
-#       debug:
-#         msg: "{{ temp.msg | replace('-', '_') }}"
-#       register: device_primary_flash_variable
-
-#     - name: Setting fact for primary flash
-#       set_fact: device_primary_flash="{{ lookup('vars', device_primary_flash_variable.msg) }}"
-
-# - block:
-#     - name: Preparing secondary flash variable...
-#       debug:
-#         msg: "device_secondary_flash_{{ inventory_hostname }}"
-#       register: temp
-
-#     - name: Preparing secondary flash variable...
-#       debug:
-#         msg: "{{ temp.msg | replace('-', '_') }}"
-#       register: device_secondary_flash_variable
-
-#     - name: Setting fact for secondary flash
-#       set_fact: device_secondary_flash="{{ lookup('vars', device_secondary_flash_variable.msg) }}"
-#       ignore_errors: true
-
 - name: debug primary flash name
   debug: var="device_primary_flash"
   when: device_primary_flash is defined
@@ -49,6 +20,15 @@
   when: device_secondary_flash is defined
 
 # Remove inactive software image
+
+- name: Assert that IOS device has free memory in primary memory after removing inactive images
+  assert:
+    that:
+      - "'ios' == ansible_net_system"
+      - 1000 < ansible_net_memfree_mb | default('1001') | int
+    success_msg: Device is in healthy state.
+    fail_msg: Device should be manually verified.
+  when: ansible_net_memfree_mb is defined
 
 # Remote copy of image to primary flash
 
