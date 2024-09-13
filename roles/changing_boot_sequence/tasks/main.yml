@@ -1,0 +1,3 @@
+---
+- name: Upgrading The Switch
+  debug: msg="Upgrading Switch {{inventory_hostname}}"

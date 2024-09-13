@@ -1,0 +1,9 @@
+---
+- name: Changing Boot Sequence
+  hosts: devices
+  gather_facts: no
+  connection: network_cli
+  strategy: free
+  tasks:
+    - import_role:
+        name: changing_boot_sequence
