@@ -1,17 +1,38 @@
 ---
-- name: Check free memory in primary flash
-  ios_command:
-    commands:
-      - "dir {{ device_primary_flash }}: | in free"
-  register: primary_flash_space_output
+- block:
+    - name: Check free memory in primary flash
+      ios_command:
+        commands:
+          - "dir {{ device_primary_flash }}: | in free"
+      register: primary_flash_space_output
 
-- name: Intermediate processing...
-  set_fact: free_string={{ primary_flash_space_output['stdout'][0][primary_flash_space_output['stdout'][0].find('(')+1:] }}
+    - name: Intermediate processing...
+      set_fact: free_string={{ primary_flash_space_output['stdout'][0][primary_flash_space_output['stdout'][0].find('(')+1:] }}
 
-- name: Intermediate processing...
-  set_fact: primary_flash_memfree={{ free_string[:free_string.find(' ')] }}
+    - name: Intermediate processing...
+      set_fact: primary_flash_memfree={{ free_string[:free_string.find(' ')] }}
 
-- name: Intermediate processing...
-  set_fact: primary_flash_memfree_mb={{ primary_flash_memfree | int / 1000000 }}
+    - name: Intermediate processing...
+      set_fact: primary_flash_memfree_mb={{ primary_flash_memfree | int / 1000000 }}
 
-- debug: var="primary_flash_memfree_mb"
+    - debug: var="primary_flash_memfree_mb"
+  when: device_primary_flash is defined
+
+- block:
+    - name: Check free memory in secondary flash
+      ios_command:
+        commands:
+          - "dir {{ device_secondary_flash }}: | in free"
+      register: seconday_flash_space_output
+
+    - name: Intermediate processing...
+      set_fact: free_string={{ seconday_flash_space_output['stdout'][0][seconday_flash_space_output['stdout'][0].find('(')+1:] }}
+
+    - name: Intermediate processing...
+      set_fact: secondary_flash_memfree={{ free_string[:free_string.find(' ')] }}
+
+    - name: Intermediate processing...
+      set_fact: secondary_flash_memfree_mb={{ secondary_flash_memfree | int / 1000000 }}
+
+    - debug: var="secondary_flash_memfree_mb"
+  when: device_secondary_flash is defined
