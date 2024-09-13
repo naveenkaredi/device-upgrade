@@ -54,7 +54,7 @@
 - name: Remote copy of IOS image to primary flash
   ios_command:
     commands:
-      - command: "copy scp://{{ rsync_u }}:{{ rsync_p }}@{{ rsync_host.msg }}.internal.salesforce.com/u01/svc_rsync/rsynced_data/IOS/{{ expected_os_version }} {{ device_primary_flash }}:/"
+      - command: "copy scp://{{ rsync_u }}:{{ rsync_p }}@{{ rsync_host.msg }}.internal.salesforce.com/u01/rsynced_data/IOS/{{ expected_os_version }} {{ device_primary_flash }}:/"
         prompt: "Destination filename"
         answer: "\r"
   vars:
