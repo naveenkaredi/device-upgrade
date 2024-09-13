@@ -40,6 +40,7 @@
           - 1000 < primary_flash_memfree_mb | default('1001') | int
         success_msg: Device is in healthy state.
         fail_msg: Device should be manually verified.
+      when: primary_flash_memfree_mb is defined
 
     - name: Assert that IOS device has free memory in secondary memory
       assert:
@@ -48,7 +49,8 @@
           - 1000 < secondary_flash_memfree_mb | default('1001') | int
         success_msg: Device is in healthy state.
         fail_msg: Device should be manually verified.
-        
+      when: secondary_flash_memfree_mb is defined
+
 # Remote copy of image to primary flash
 
 # copy image from primary to secondary
