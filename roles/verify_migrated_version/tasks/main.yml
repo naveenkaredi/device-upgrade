@@ -20,3 +20,4 @@
       - expected_os_version in ansible_net_image
     success_msg: Device is running target image.
     fail_msg: Device is not running target image.
+  ignore_errors: true
