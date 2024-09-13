@@ -51,7 +51,17 @@
         fail_msg: Device should be manually verified.
       when: secondary_flash_memfree_mb is defined
 
-# Remote copy of image to primary flash
+- debug: var="copy scp://{{ rsync_u }}:{{ rsync_p }}@{{ rsync_host.msg }}/u01/svc_rsync/rsynced_data/IOS/{{ expected_os_version }} {{ device_primary_flash }}:/"
+
+# - name: Remote copy of IOS image to primary flash
+#   ios_command:
+#     commands:
+#       - command: "copy scp://{{ rsync_u }}:{{ rsync_p }}@{{ rsync_host.msg }}/u01/svc_rsync/rsynced_data/IOS/{{ expected_os_version }} {{ device_primary_flash }}:/"
+#         prompt: "Destination filename"
+#         answer: "\r"
+#   vars:
+#     ansible_command_timeout: 10800
+#   register: output
 
 # copy image from primary to secondary
 
