@@ -63,7 +63,7 @@
 - name: Check image in primary flash
   ios_command:
     commands:
-      - command: "dir | include {{ expected_os_version }}"
+      - command: "dir | include cat9k_iosxe.17.09.03.SPA.bin"
   register: output
 
 - debug: msg="{{output}}"
