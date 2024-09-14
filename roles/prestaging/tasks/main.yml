@@ -58,15 +58,23 @@
 
 - debug: msg="{{output}}"
 
-- debug: msg="{{expected_os_version}}"
+
 
 - name: Check image in primary flash
   ios_command:
     commands:
-      - command: "dir | include  cat9k_iosxe.17.09.03.SPA.bin"
+      - command: "dir | include {{ expected_os_version }}"
   register: output
 
 - debug: msg="{{output}}"
+
+- debug: msg="Empty"
+  when: "{{ output['stdout'] | length }} is 0"
+
+- debug: msg="not empty"
+  when: "{{ output['stdout'] | length }} is not 0"
+
+  
 # - name: Remote copy of IOS image to primary flash
 #   ios_command:
 #     commands:
