@@ -69,12 +69,12 @@
 - debug: msg="{{output}}"
 
 - debug: msg="Empty"
-  when: "{{ output['stdout'] | length }} is 0"
+  when: "(output['stdout']|length) == 0"
 
 - debug: msg="not empty"
-  when: "{{ output['stdout'] | length }} is not 0"
+  when: "(output['stdout']|length) > 0"
 
-  
+
 # - name: Remote copy of IOS image to primary flash
 #   ios_command:
 #     commands:
