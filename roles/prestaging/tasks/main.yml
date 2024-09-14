@@ -50,14 +50,23 @@
 #         success_msg: Device is in healthy state.
 #         fail_msg: Device should be manually verified.
 #       when: secondary_flash_memfree_mb is defined
+- name: Check image in primary flash
+  ios_command:
+    commands:
+      - command: "dir"
+  register: output
+
+- debug: msg="{{output}}"
+
+- debug: msg="{{expected_os_version}}"
 
 - name: Check image in primary flash
   ios_command:
     commands:
-      - command: "dir | inc {{ expected_os_version }}"
-  register: flash_output
+      - command: "dir | include {{ expected_os_version }}"
+  register: output
 
-- debug: msg="{{flash_output}}"
+- debug: msg="{{output}}"
 # - name: Remote copy of IOS image to primary flash
 #   ios_command:
 #     commands:

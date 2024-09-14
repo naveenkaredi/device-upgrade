@@ -1,21 +1,21 @@
 --- 
-- name: Ping Values Transformation
-  hosts: devices
-  gather_facts: no
-  strategy: linear
-  run_once: true
-  tasks:
-    - import_role:
-        name: ping_transform
+# - name: Ping Values Transformation
+#   hosts: devices
+#   gather_facts: no
+#   strategy: linear
+#   run_once: true
+#   tasks:
+#     - import_role:
+#         name: ping_transform
 
-- name: Validate Disk Storage
-  hosts: devices
-  gather_facts: no
-  connection: network_cli
-  strategy: free
-  tasks:
-    - import_role:
-        name: validate_disk_storage
+# - name: Validate Disk Storage
+#   hosts: devices
+#   gather_facts: no
+#   connection: network_cli
+#   strategy: free
+#   tasks:
+#     - import_role:
+#         name: validate_disk_storage
 
 - name: Prestaging
   hosts: devices
