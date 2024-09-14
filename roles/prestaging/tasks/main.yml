@@ -69,10 +69,10 @@
 - debug: msg="{{output}}"
 
 - debug: msg="Empty"
-  when: "(output['stdout']|length) == 0"
+  when: "(output['stdout'][0]|length) == 0"
 
 - debug: msg="not empty"
-  when: "(output['stdout']|length) > 0"
+  when: "(output['stdout'][0]|length) > 0"
 
 
 # - name: Remote copy of IOS image to primary flash
