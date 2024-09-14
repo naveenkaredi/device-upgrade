@@ -77,6 +77,8 @@
   vars:
     ansible_command_timeout: 10800
 
+- debug: msg="{{output}}"
+
 - name: Assert that MD5 of primary flash IOS file Is Correct
   assert:
     that:
