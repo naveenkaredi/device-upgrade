@@ -3,3 +3,26 @@ check_commands:
   ios:
     - cmd: show ip protocol
     - cmd: show ip ospf nei
+    - cmd: show cdp nei
+    - cmd: show etherchannel summary
+    - cmd: "show int des | ex unassigned"
+    - cmd: "sh int des | ex down"
+    - cmd: "show ip int brief | ex unassigned"
+    - cmd: show process cpu sorted
+    - cmd: show process memory sorted
+    - cmd: show environ all
+    - cmd: show module
+    - cmd: show arp    
+    - cmd: show ip arp
+    - cmd: show ip route
+    - cmd: show ip bgp summary
+    - cmd: show version
+    - cmd: show switch
+    - cmd: show redundancy
+    - cmd: "dir bootflash:"
+    - cmd: "dir all-filesystems"
+    - cmd: show mac address
+    - cmd: show log    
+    - cmd: show inventory
+    - cmd: show boot
+    - cmd: "show run | in boot"
