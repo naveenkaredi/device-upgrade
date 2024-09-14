@@ -19,3 +19,29 @@
 - name: debug primary flash name
   debug: var="device_primary_flash"
   when: device_primary_flash is defined
+
+- name: Gather facts to gather current image file
+  ios_facts:
+    gather_subset:
+      - min
+      - hardware
+  register: output
+
+- name: Show installed boot image file
+  debug: msg="{{ ansible_net_image }}"
+  when: output is defined
+
+- name: Run upgrade commands
+  ios_command:
+    commands:
+      - "conf t"
+      - "no boot system"
+      - "boot system {{ device_primary_flash }}:{{ expected_os_version }}"
+      - "boot system {{ device_primary_flash }}:{{ ansible_net_image.split(':')[-1] | replace('/', '') }}"
+  vars:
+    ansible_command_timeout: 600
+  when: device_primary_flash is defined
+
+- name: Save running config before exiting
+  ios_config:
+    save_when: always
