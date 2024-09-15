@@ -79,6 +79,8 @@
 
 - debug: msg="{{output}}"
 
+- debug: msg={{output['stdout'][1].split('=')[-1] | replace(' ', '')}}
+
 - name: Assert that MD5 of primary flash IOS file Is Correct
   assert:
     that:
