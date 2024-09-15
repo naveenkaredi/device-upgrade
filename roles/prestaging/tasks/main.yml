@@ -82,7 +82,7 @@
 - name: Assert that MD5 of primary flash IOS file Is Correct
   assert:
     that:
-      - md5_value == "{{ output['stdout'][0].split('=')[-1] | replace(' ', '') }}"
+      - md5_value == "output['stdout'][0].split('=')[-1] | replace(' ', '')"
 
 - block:
     - name: Check image in secondary flash
