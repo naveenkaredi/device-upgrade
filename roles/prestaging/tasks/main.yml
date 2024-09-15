@@ -60,22 +60,22 @@
 - debug: msg="{{output}}"
 
 - name: Remote copy of IOS image to primary flash
+  vars:
+    ansible_command_timeout: 10800
   ios_command:
     commands:
       - command: "copy scp://{{ rsync_u }}:{{ rsync_p }}@{{ rsync_host.msg }}/rsynced_data/IOS/{{ expected_os_version }} {{ device_primary_flash }}:/"
         prompt: "Destination filename"
         answer: "\r"
-  vars:
-    ansible_command_timeout: 10800
   when: "(output['stdout'][0]|length) == 0"
 
 - name: Get md5 of IOS file in primary flash
+  vars:
+    ansible_command_timeout: 10800
   ios_command:
     commands:
       - "verify /md5 {{ device_primary_flash }}:/{{ expected_os_version }}"
   register: output
-  vars:
-    ansible_command_timeout: 10800
 
 - debug: msg="{{output}}"
 
@@ -94,6 +94,8 @@
     - debug: msg="{{output}}"
 
     - name: Copy IOS image from primary to secondary flash
+      vars:
+        ansible_command_timeout: 10800
       cli_command:
         command: "copy {{ device_primary_flash }}:/{{ expected_os_version }} {{ device_secondary_flash }}:/"
         check_all: True
@@ -103,17 +105,16 @@
         answer:
           - "{{ expected_os_version }}"
           - "y"
-      vars:
-        ansible_command_timeout: 10800
       when: "(output['stdout'][0]|length) == 0"
 
     - name: Get md5 of IOS file in secondary flash
+      vars:
+        ansible_command_timeout: 10800
       ios_command:
         commands:
           - "verify /md5 {{ device_secondary_flash }}:/{{ expected_os_version }}"
       register: output
-      vars:
-        ansible_command_timeout: 10800
+      
 
     - name: Assert that MD5 of secondary flash IOS file Is Correct
       assert:
